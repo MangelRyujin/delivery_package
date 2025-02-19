@@ -10,7 +10,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 
 # local view (index)
-@group_required('administrador')
+@group_required('administrador','gestor')
 @staff_member_required(login_url='/')
 def customer_view(request):
     response= render(request,'customer_templates/customer.html',{'form':CustomerForm()})
@@ -20,7 +20,7 @@ def customer_view(request):
     return response
 
 # Charge result table
-@group_required('administrador')
+@group_required('administrador','gestor')
 @staff_member_required(login_url='/')
 def customer_table_results(request):
     return  render(request,'customer_templates/customer_table_results.html',context=_show_customer(request))
@@ -42,7 +42,7 @@ def customer_create(request):
     return render(request,'customer_templates/actions/customerCreate/customerCreateForm.html',context) 
 
 # customer update forms
-@group_required('administrador')
+@group_required('administrador','gestor')
 @staff_member_required(login_url='/')
 def customer_update(request,pk):
     customer = get_object_or_404(Customer,pk=pk)
@@ -62,7 +62,7 @@ def customer_update(request,pk):
     return render(request,'customer_templates/actions/customerUpdate/customerUpdateCheckForm.html',context) 
 
 # Show customer table
-@group_required('administrador')
+@group_required('administrador','gestor')
 @staff_member_required(login_url='/')
 def _show_customer(request):
     return _create_paginator(request,CustomerFilter(request.GET, queryset=Customer.objects.all().order_by('email')))

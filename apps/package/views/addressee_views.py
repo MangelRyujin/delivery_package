@@ -10,7 +10,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 
 # local view (index)
-@group_required('administrador')
+@group_required('administrador','gestor')
 @staff_member_required(login_url='/')
 def addressee_view(request):
     context={
@@ -24,7 +24,7 @@ def addressee_view(request):
     return response
 
 # Charge result table
-@group_required('administrador')
+@group_required('administrador','gestor')
 @staff_member_required(login_url='/')
 def addressee_table_results(request):
     return  render(request,'addressee_templates/addressee_table_results.html',context=_show_addressee(request))
@@ -47,7 +47,7 @@ def addressee_create(request):
     return render(request,'addressee_templates/actions/addresseeCreate/addresseeCreateForm.html',context) 
 
 # addressee update forms
-@group_required('administrador')
+@group_required('administrador','gestor')
 @staff_member_required(login_url='/')
 def addressee_update(request,pk):
     addressee = get_object_or_404(Addressee,pk=pk)
@@ -69,7 +69,7 @@ def addressee_update(request,pk):
     return render(request,'addressee_templates/actions/addresseeUpdate/addresseeUpdateCheckForm.html',context) 
 
 # Show addressee table
-@group_required('administrador')
+@group_required('administrador','gestor')
 @staff_member_required(login_url='/')
 def _show_addressee(request):
     return _create_paginator(request,AddresseeFilter(request.GET, queryset=Addressee.objects.all().order_by('full_name')))

@@ -6,20 +6,20 @@
 
 
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 g-3 pt-2 mb-4 pb-4 ">
-  {% if request.user|has_group:"administrador"%}
-    <div class="col">
-      <div class="h-100 p-3 bg-body-tertiary border rounded-3">
-        <h2>Usuarios</h2>
-        <div class="mb-2 flex justify-content-center w-100">
-        <img src="{% static "img/users.svg" %}" height="250" width="100%"/>
+      {% if request.user|has_group:"administrador"%}
+        <div class="col">
+          <div class="h-100 p-3 bg-body-tertiary border rounded-3">
+            <h2>Usuarios</h2>
+            <div class="mb-2 flex justify-content-center w-100">
+            <img src="{% static "img/users.svg" %}" height="250" width="100%"/>
+            </div>
+            <p>Administre los usuarios del sistema, incluyendo permisos e información personal.</p>
+            <div class="d-flex justify-content-end">
+              <a href="{% url "admin_view" %}" class="btn btn-primary fw-bold" type="button">Ver más</a>
+            </div>
+            
+          </div>
         </div>
-        <p>Administre los usuarios del sistema, incluyendo permisos e información personal.</p>
-        <div class="d-flex justify-content-end">
-          <a href="{% url "admin_view" %}" class="btn btn-primary fw-bold" type="button">Ver más</a>
-        </div>
-        
-      </div>
-    </div>
     
       {% endif %}
       <div class="col">
