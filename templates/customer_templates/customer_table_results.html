@@ -30,9 +30,10 @@
       <table class="table  table-hover">
         <thead>
           <tr class="text-center">
+            <th  scope="col">Código</th>
             <th  scope="col">Email</th>
             <th  scope="col">Nombres y apellidos</th>
-            <th  scope="col">DNI</th>
+          
             <th  scope="col">Móvil</th>
             <th scope="col">Acciones</th>
           </tr>
@@ -40,9 +41,10 @@
         <tbody>
         {% for customer in pagination %}
             <tr class="text-center">
-                <td class="border small pt-2 table-min">{{customer.email}}</td>   
+              <td class="border small pt-2 ">{{customer.pk}}</td>
+                <td class="border small pt-2 table-min">{% if customer.email %}{{customer.email}}{% else %}-{% endif %}</td>   
                 <td class="border small pt-2 table-min text-ellipsis-username">{{customer.full_name}}</td>
-                <td class="border small pt-2 table-min text-ellipsis-username">{% if customer.dni %}{{customer.dni}}{% else %}-{% endif %}</td>      
+                 
                 <td class="border small pt-2 table-min ">{% if customer.phone_number %}{{customer.phone_number}}{% else %}-{% endif %}</td>         
                 
                         

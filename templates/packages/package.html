@@ -1,13 +1,8 @@
 {% extends "base_admin.html" %}
 {% load static %}
-{% block title %} Ventas {% endblock %}
+{% block title %} Paquetes {% endblock %}
 {% block contend %}
-       {% include "sales/orderDelete/modalOrderDelete.html" %}
-       {% include "sales/orderDiscount/modalOrderDiscount.html" %}
-       {% include "sales/orderCreate/offcanvasRightOrderCreate.html" %}
-       {% include "sales/orderSold/modalOrderSold.html" %}
-       {% include "sales/orderUpdate/offcanvasRightOrderUpdate.html" %}
-       {% comment %} {% include "sales/serviceOrderUpdate/offcanvasRightServiceOrderUpdate.html" %} {% endcomment %}
+       
        
 
   <div class="w-100 d-flex justify-content-between align-items-center my-2 gap-3" >
@@ -16,9 +11,9 @@
       <input type="search" 
             class="form-control"
             name="keyword" placeholder="Buscar..." 
-            hx-post="{% url 'order_results_view' %}" 
+            hx-post="{% url 'packages_results_view' %}" 
             hx-trigger="input changed delay:500ms, keyword" 
-            hx-target="#OrderResults" 
+            hx-target="#PackageResults" 
             hx-indicator="#spinner"
             hx-headers='{"X-CSRFToken":"{{ csrf_token }}"}'
         >
@@ -33,7 +28,7 @@
   
         <button type="submit" class="btn btn-outline-success shadow-sm border-2 border-success px-4 d-flex justify-content-center align-items-center"
         data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightOrderCreate" aria-controls="offcanvasRight"
-        hx-get="{% url 'order_create' %}"
+        {% comment %} hx-get="{% url 'order_create' %}" {% endcomment %}
         hx-swap="innerHTML"
         hx-trigger="click"
         hx-target="#OrderCreate"
@@ -50,16 +45,26 @@
   
   </div>  
 
-
-    <div class="w-100 position-relative d-flex justify-content-center align-items-start mb-5 pb-5" style="min-height: 200px !important;" >
+  <ul class="d-flex gap-2 w-100 nav nav-pills pt-2" id="pills-tab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Tarjetas</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Tabla</button>
+    </li>
+  </ul>
+  
+    
+  <div class="w-100 position-relative d-flex justify-content-center align-items-start mb-5 pb-5" style="min-height: 200px !important;" >
     <div id="spinner" class="htmx-indicator w-100 h-100  loadding-blur position-absolute z-10 d-flex justify-content-center align-items-center"
     style="min-height: 200px !important;z-index: 100;">
       <div class="spinner-border" role="status">
         <span class="visually-hidden">Loading...</span>
       </div>
     </div>
-    <div class="w-100 mt-3" id="OrderResults">
-      {% include "sales/order_result.html" %}
+    
+    <div class="w-100 mt-3" id="PackageResults">
+      {% include "packages/package_result.html" %}
     </div>  
     </div>
     
@@ -68,8 +73,8 @@
 
     {% block extra_script %}
             
-    <script type="text/javascript" src="{% static '/assets/js/formset.js' %}"></script>
-    {% comment %} <script type="text/javascript" src="{% static '/assets/js/extra_formset.js' %}"></script> {% endcomment %}
+    {% comment %} <script type="text/javascript" src="{% static '/assets/js/formset.js' %}"></script> {% endcomment %}
+    
   {% endblock%}
 {% endblock contend %}
 

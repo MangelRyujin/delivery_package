@@ -49,17 +49,7 @@
               {% endif %}
              
           </div>
-              <div class="col-12 mt-4">
-                <label for="{{ form.email.id_for_label }}Update" class="form-label">Email</label>
-                <input type="email" required name="email" value="{{ form.email.value }}" class="form-control" id="{{ form.email.id_for_label }}Update" placeholder="Email">
-                {% if form.email.errors %}
-                    <div class="alert alert-danger mt-2">
-                        {% for error in form.email.errors %}
-                            {{ error }}
-                        {% endfor %}
-                    </div>
-                    {% endif %}      
-              </div>
+              
               <div class="col-12 mt-4">
                 <label for="{{ form.full_name.id_for_label }}Update" class="form-label">Nombres y apellidos</label>
                 <input type="text" required name="full_name" value="{{ form.full_name.value }}" class="form-control" id="{{ form.full_name.id_for_label }}Update" placeholder="Nombres y apellidos">
@@ -71,16 +61,27 @@
                     </div>
                     {% endif %}      
               </div>
-              <div class="col-12">
-                <label for="{{ form.dni.id_for_label }}" class="form-label">DNI</label>
-                <input type="text" name="dni" value="{% if form.dni.value %}{{ form.dni.value }}{% endif %}" class="form-control" id="{{ form.dni.id_for_label }}" placeholder="DNI">
-                {% if form.dni.errors %}
-                <div class="alert alert-danger mt-2">
-                    {% for error in form.dni.errors %}
-                        {{ error }}
-                    {% endfor %}
-                </div>
-                {% endif %}    
+              <div class="col-12 mt-4">
+                <label for="{{ form.province.id_for_label }}Update" class="form-label">Provincia</label>
+                <input type="province" required name="province" value="{{ form.province.value }}" class="form-control" id="{{ form.province.id_for_label }}Update" placeholder="Provincia">
+                {% if form.province.errors %}
+                    <div class="alert alert-danger mt-2">
+                        {% for error in form.province.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                    {% endif %}      
+              </div>
+              <div class="col-12 mt-4">
+                <label for="{{ form.municipe.id_for_label }}Update" class="form-label">Municipio</label>
+                <input type="municipe" required name="municipe" value="{{ form.municipe.value }}" class="form-control" id="{{ form.municipe.id_for_label }}Update" placeholder="Municipio">
+                {% if form.municipe.errors %}
+                    <div class="alert alert-danger mt-2">
+                        {% for error in form.municipe.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                    {% endif %}      
               </div>
               <div class="col-12">
                 <label for="{{form.phone_number.id_for_label}}" class="form-label">Móvil</label>

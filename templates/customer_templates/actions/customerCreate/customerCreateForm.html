@@ -8,9 +8,9 @@
           hx-trigger="submit"
           hx-indicator="#spinnerCustomerCreate">
           {% csrf_token %}
-          <div class="col-12 mt-4">
+          <div class="col-12 ">
             <label for="{{ form.email.id_for_label }}Create" class="form-label">Email</label>
-            <input type="email" required name="email" value="{% if form.email.value %}{{ form.email.value }}{% endif %}" class="form-control" id="{{ form.email.id_for_label }}Create" placeholder="Email">
+            <input type="email"  name="email" value="{% if form.email.value %}{{ form.email.value }}{% endif %}" class="form-control" id="{{ form.email.id_for_label }}Create" placeholder="Email">
             {% if form.email.errors %}
                 <div class="alert alert-danger mt-2">
                     {% for error in form.email.errors %}
@@ -30,20 +30,10 @@
                 </div>
                 {% endif %}      
           </div>
-          <div class="col-12">
-            <label for="{{ form.dni.id_for_label }}Create" class="form-label">DNI</label>
-            <input type="text" name="dni" value="{% if form.dni.value %}{{ form.dni.value }}{% endif %}" class="form-control" id="{{ form.dni.id_for_label }}Create" placeholder="DNI">
-            {% if form.dni.errors %}
-            <div class="alert alert-danger mt-2">
-                {% for error in form.dni.errors %}
-                    {{ error }}
-                {% endfor %}
-            </div>
-            {% endif %}    
-          </div>
-          <div class="col-12">
+          
+          <div class="col-12 mt-4">
             <label for="{{form.phone_number.id_for_label}}Create" class="form-label">Móvil</label>
-            <input type="text" name="phone_number" value="{% if form.phone_number.value  %}{{form.phone_number.value}}{% else %}{% endif %}" class="form-control" id="{{form.phone_number.id_for_label}}Create" placeholder="Móvil">
+            <input type="text" required name="phone_number" value="{% if form.phone_number.value  %}{{form.phone_number.value}}{% else %}{% endif %}" class="form-control" id="{{form.phone_number.id_for_label}}Create" placeholder="Móvil">
             {% if form.phone_number.errors %}
             <div class="alert alert-danger mt-2">
                 {% for error in form.phone_number.errors %}
@@ -52,9 +42,9 @@
             </div>
             {% endif %}      
           </div>
-          <div class="col-12">
-            <label for="{{ form.address.id_for_label }}Create" class="form-label">Dirección</label>
-            <input type="text" name="address" value="{% if form.address.value %}{{ form.address.value }}{% else %}{% endif %}" class="form-control" id="{{ form.address.id_for_label }}Create" placeholder="Dirección">
+          <div class="col-12 mt-4">
+            <label for="{{ form.address.id_for_label }}Create" required class="form-label">Dirección</label>
+            <input type="text" required name="address" value="{% if form.address.value %}{{ form.address.value }}{% else %}{% endif %}" class="form-control" id="{{ form.address.id_for_label }}Create" placeholder="Dirección">
             {% if form.address.errors %}
             <div class="alert alert-danger mt-2">
                 {% for error in form.address.errors %}
@@ -99,7 +89,7 @@
               <span type="button" class="btn-close px-2" data-bs-dismiss="alert" aria-label="Close"></span>
             </div>
           {% endif %}
-          <small class=" w-100 d-flex justify-content-end mt-3">
+          <small class=" w-100 d-flex justify-content-end mt-4">
             <button type="submit" class="btn d-flex justify-content-center align-items-center btn-outline-primary shadow-sm border-2 border-primary px-5">
               <span id="spinnerCustomerCreate" class="htmx-indicator spinner-border spinner-border-sm me-2" ></span>Crear</button>
         </small>

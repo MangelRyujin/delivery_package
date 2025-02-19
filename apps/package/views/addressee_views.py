@@ -72,4 +72,4 @@ def addressee_update(request,pk):
 @group_required('administrador')
 @staff_member_required(login_url='/')
 def _show_addressee(request):
-    return _create_paginator(request,AddresseeFilter(request.GET, queryset=Addressee.objects.all().order_by('email')))
+    return _create_paginator(request,AddresseeFilter(request.GET, queryset=Addressee.objects.all().order_by('full_name')))

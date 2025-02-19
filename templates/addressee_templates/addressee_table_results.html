@@ -30,8 +30,10 @@
       <table class="table  table-hover">
         <thead>
           <tr class="text-center">
-            <th  scope="col">Email</th>
+            <th  scope="col">Código</th>
             <th  scope="col">Nombres y apellidos</th>
+            <th  scope="col">Provincia</th>
+            <th  scope="col">Municipio</th>
             <th  scope="col">Cliente</th>
             <th  scope="col">Móvil</th>
             <th scope="col">Acciones</th>
@@ -40,9 +42,11 @@
         <tbody>
         {% for addressee in pagination %}
             <tr class="text-center">
-                <td class="border small pt-2 table-min">{{addressee.email}}</td>   
+              <td class="border small pt-2 ">{{addressee.pk}}</td>
                 <td class="border small pt-2 table-min text-ellipsis-username">{{addressee.full_name}}</td>
-                <td class="border small pt-2 table-min text-ellipsis-username">{{addressee.customer.email}}</td>      
+                <td class="border small pt-2 table-min">{{addressee.province}}</td>   
+                <td class="border small pt-2 table-min">{{addressee.municipe}}</td>   
+                <td class="border small pt-2 table-min text-ellipsis-username">{% if addressee.customer.email %}{{addressee.customer.email}}{% else %}-{% endif %}</td>      
                 <td class="border small pt-2 table-min ">{% if addressee.phone_number %}{{addressee.phone_number}}{% else %}-{% endif %}</td>         
                 
                         
