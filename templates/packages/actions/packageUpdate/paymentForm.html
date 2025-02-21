@@ -1,17 +1,20 @@
 <h5>Monto a pagar</h5>
-<div class="input-group mt-2 ">
-    <label class="input-group-text" for="totalPrice">
-    $
-    </label>
-    <input type="text" disabled value="{{package.total_price}}" required name="total_price" class="form-control " id="totalPrice">
-    {% if package.payment_state == '1' %}
-      <button type="submit" class="btn-sm btn d-flex justify-content-center align-items-center btn-outline-success shadow-sm border-2 border-success "
-        hx-get="{% url 'package_payment_update' pk=package.pk %}"
+<form class="input-group mt-2 "
+          hx-post="{% url 'package_payment_update' pk=package.pk %}"
           hx-target="#payments-tab-pane"
           hx-swap="innerHTML"
-          hx-trigger="click"
+          hx-trigger="submit"
           hx-indicator="#spinnerPaymentPackageUpdate"
-      >
+          >{% csrf_token %}
+    
+    <input type="text" disabled value="$ {{package.total_price}}" required name="total_price" class="form-control " id="totalPrice">
+    <select name="payment_method" class="form-select" id="inputGroupSelect01">
+      <option value="1" {% if package.payment_method == '1' %}selected{% endif %}>Efectivo</option>
+      <option value="2" {% if package.payment_method == '2' %}selected{% endif %}>Transferencia</option>
+      <option value="3" {% if package.payment_method == '3' %}selected{% endif %}>Tarjeta</option>
+    </select>
+    {% if package.payment_state == '1' %}
+      <button type="submit" class="btn-sm btn d-flex justify-content-center align-items-center btn-outline-success shadow-sm border-2 border-success ">
         <span id="spinnerPaymentPackageUpdate" class="htmx-indicator spinner-border spinner-border-sm me-2" ></span>
         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class=" bi-check2-all" viewBox="0 0 16 16">
             <path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0"/>
@@ -19,20 +22,14 @@
           </svg>
       </button>
       {% else %}
-      <button type="submit" class="btn-sm btn d-flex justify-content-center align-items-center btn-outline-danger shadow-sm border-2 border-danger "
-        hx-get="{% url 'package_payment_update' pk=package.pk %}"
-          hx-target="#payments-tab-pane"
-          hx-swap="innerHTML"
-          hx-trigger="click"
-          hx-indicator="#spinnerPaymentPackageUpdate"
-          >
+      <button type="submit" class="btn-sm btn d-flex justify-content-center align-items-center btn-outline-danger shadow-sm border-2 border-danger ">
         <span id="spinnerPaymentPackageUpdate" class="htmx-indicator spinner-border spinner-border-sm me-2" ></span>
         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class=" bi-x-circle-fill" viewBox="0 0 16 16">
             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
           </svg>
       </button>
       {% endif %}
-  </div>
+  </form>
   <label class="" for="totalPrice">
     Activar o desactivar estado de pago
     </label>

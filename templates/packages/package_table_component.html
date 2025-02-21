@@ -6,7 +6,7 @@
     <td class="border small table-min d-flex justify-content-around">{{package.get_state_display}}
       <button  class="btn-sm btn d-flex justify-content-center align-items-center btn-outline-success shadow-sm border-2 border-success "
         
-          hx-get="{% url 'package_component_table_detail' pk=package.pk %}"
+          hx-get="{% url 'package_component_table_payment' pk=package.pk %}"
           hx-target="#TablePackage{{package.pk}}"
           hx-swap="outerHTML"
           hx-trigger="click"

@@ -16,6 +16,7 @@ urlpatterns = [
     path('package_images_delete/<int:pk>/',package_images_delete,name='package_images_delete'),
     path('package_payment_update/<int:pk>/',package_payment_update,name='package_payment_update'),
     path('package_component_table_detail/<int:pk>/',package_component_table_detail,name='package_component_table_detail'),
+    path('package_component_table_payment/<int:pk>/',package_component_table_payment,name='package_component_table_payment'),
     
     
 ]

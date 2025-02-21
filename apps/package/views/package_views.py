@@ -185,15 +185,20 @@ def package_images_update(request,pk):
 @group_required('administrador','gestor')
 @staff_member_required(login_url='/')
 def package_payment_update(request,pk):
+    import datetime
     package = Package.objects.filter(pk=pk).first()
     context={}
-    if package.payment_state == '1':
-        package.payment_state = '2'
-        context['message']= "Se ha pagado"
-    else:
-        package.payment_state = '1'
-        context['message']= "No se ha pagado"
-    package.save()
+    if request.method == 'POST':
+        if package.payment_state == '1':
+            package.payment_state = '2'
+            package.payment_method = request.POST['payment_method'] or '1'
+            package.payment_datetime = datetime.datetime.now()
+            context['message']= "Se ha pagado"
+        else:
+            package.payment_state = '1'
+            package.payment_datetime = None
+            context['message']= "No se ha pagado"
+        package.save()
     context['package']= package
     return render(request,'packages/actions/packageUpdate/paymentForm.html',context) 
 
@@ -234,7 +239,7 @@ def package_delete(request,pk):
 # package detail forms
 @group_required('administrador','gestor')
 @staff_member_required(login_url='/')
-def package_component_table_detail(request,pk):
+def package_component_table_payment(request,pk):
     package = Package.objects.filter(pk=pk,state='1').first()
     package.state='2'
     package.save()
