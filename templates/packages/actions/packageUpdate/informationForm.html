@@ -1,0 +1,154 @@
+{% if form %}
+      <form 
+              enctype="multipart/form-data"
+              hx-post="{% url 'package_information_update' pk=package.pk %}"
+              hx-target="#PackageUpdateForm"
+              hx-swap="innerHTML"
+              hx-trigger="submit"
+              hx-indicator="#spinnerPackageUpdate">
+              {% csrf_token %}
+                <div class="col-12  ">  
+                  <label for="{{ form.customer.id_for_label }}Update" class="form-label">Clientes</label>
+                  <div class="input-group d-flex justify-content-center align-items-center">
+                  
+                    <select class="form-control selectpicker w-100"  
+                          data-show-subtext="true" 
+                          data-live-search="true"
+                          required
+                          name="customer"
+                          hx-get="{% url 'package_get_addressee_update' pk=package.pk %}"
+                          hx-target="#SelectAddresseeUpdateComponent"
+                          hx-swap="innerHTML"
+                          hx-trigger="load,change"
+                          hx-indicator="#spinnerSelectAddresseeUpdateComponent"
+                          id="{{ form.customer.id_for_label }}Update">
+                          <option value="" selected>
+                            Seleccionar cliente
+                          </option>
+                          {% for customer in customers %}
+                            <option value="{{customer.pk}}" {% if package.customer.pk == customer.pk %}selected{% endif %}
+                            
+                          >
+                              {{customer.email}}
+                            </option>
+                          {% endfor %}
+                        </select>
+                        
+                        
+                  </div>
+                  {% if form.customer.errors %}
+                  <div class="alert alert-danger mt-2">
+                  {% for error in form.customer.errors %}
+                      {{ error }}
+                  {% endfor %}
+                </div>
+                  {% endif %}
+                
+              </div>
+              <div class="col-12  mt-4">  
+                <label for="SelectAddresseeUpdate" class="form-label">Destinatario</label>
+                <div class="input-group" id='SelectAddresseeUpdateComponent'>
+                  
+                      {% include "packages/actions/getAddressee/selectOptions.html" %}
+                      
+                </div>
+                {% if form.addressee.errors %}
+                <div class="alert alert-danger mt-2">
+                {% for error in form.addressee.errors %}
+                    {{ error }}
+                {% endfor %}
+              </div>
+                {% endif %}
+              
+            </div>
+            <script>
+              $(document).ready(function() {
+                  $('.selectpicker').selectpicker();
+                });
+            </script>
+              <div class="col-12 mt-4">
+                <label for="{{ form.cost.id_for_label }}Update" class="form-label">Costo</label>
+                <input type="number" min="0.01" step="0.01" value="{{form.cost.value}}" class="form-control" required name="cost" id="{{ form.cost.id_for_label }}Update" placeholder="costo">
+                {% if form.cost.errors %}
+                <div class="alert alert-danger mt-2">
+                    {% for error in form.cost.errors %}
+                        {{ error }}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+              <div class="col-12 mt-4">
+                <label for="{{ form.tax.id_for_label }}Update" class="form-label">Impuesto</label>
+                <input type="number" required min="0.01" step="0.01" value="{{form.tax.value}}" name="tax" class="form-control" id="{{ form.tax.id_for_label }}Update" placeholder="impuesto">
+                {% if form.tax.errors %}
+                <div class="alert alert-danger mt-2">
+                    {% for error in form.tax.errors %}
+                        {{ error }}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+              <div class="col-12 mt-4">
+                
+                <label for="{{ form.weight.id_for_label }}Update" class="form-label">Peso (kg)</label>
+                <input type="number" required min="0.01" step="0.01" value="{{form.weight.value}}" name="weight" class="form-control" id="{{ form.weight.id_for_label }}Update" placeholder="peso">
+                {% if form.weight.errors %}
+                <div class="alert alert-danger mt-2">
+                    {% for error in form.weight.errors %}
+                        {{ error }}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+              <div class="col-12 mt-4">
+                <label for="{{ form.message.id_for_label }}Update" class="form-label">Mensaje extra</label>
+                <textarea name="message" class="form-control" id="{{ form.message.id_for_label }}Update" rows="3">{{package.message}}</textarea>
+                {% if form.message.errors %}
+                <div class="alert alert-danger mt-2">
+                    {% for error in form.message.errors %}
+                        {{ error }}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+              
+              
+              
+                
+              {% if message %}
+              <div class="alert alert-dismissible alert-success d-flex align-items-center mb-0 mt-2  px-2 fade show" role="alert">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="me-2 bi-check-circle-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                  </svg>
+                  <div class="small">
+                    {{message}}
+                  </div>
+                  <span type="button" class="btn-close px-2" data-bs-dismiss="alert" aria-label="Close"></span>
+                </div>
+                <div 
+                hx-get="{% url 'package_component_table_detail' pk=package.pk %}"
+                hx-target="#TablePackage{{package.pk}}"
+                hx-trigger="load"
+                
+                hx-indicator="#spinner"></div>
+            {% endif %}
+        
+            
+              
+              {% if error %}
+              <div class="alert alert-dismissible alert-danger d-flex align-items-center mb-0 mt-2 px-2 fade show" role="alert">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="me-2 bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+                  <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                </svg>
+                  <div class="small">
+                    {{error}}
+                  </div>
+                  <span type="button" class="btn-close px-2" data-bs-dismiss="alert" aria-label="Close"></span>
+                </div>
+              {% endif %}
+              <small class=" w-100 d-flex justify-content-end mt-4">
+                <button type="submit" class="btn d-flex justify-content-center align-items-center btn-outline-primary shadow-sm border-2 border-primary px-5">
+                  <span id="spinnerPackageUpdate" class="htmx-indicator spinner-border spinner-border-sm me-2" ></span>Salvar</button>
+            </small>
+      </form>
+    {% endif %}

@@ -1,82 +1,70 @@
-{% load static %}
-{% if packages %}
-
-<div class="table-responsive table-bordered mt-0" >
-  <table class="table table-hover">
-    <thead>
-      <tr class="text-center">
-        <th  scope="col">Código</th>
-        <th scope="col">Cliente</th>
-        <th scope="col">Destinatario</th>
-        <th scope="col">Estado</th>
-        <th scope="col">Pagado</th>
-        <th scope="col">Costo</th>
-        <th scope="col">Impuesto</th>
-        <th scope="col">Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-    {% for package in packages %}
-        <tr class="text-center">
-            <td class="border small ">{{package.pk}}</td>
-            <td class="border small table-min text-ellipsis-username">{{package.customer.full_name}}</td>
-            <td class="border small table-min text-ellipsis-username">{{package.addressee.full_name}}</td>
-            <td class="border small table-min ">{{package.get_state_display}}</td>
-            <td class="border small  ">
-              <span class=" span-1 rounded-4 list-group-item {% if package.payment_state == '1' %}  list-group-item-warning {% else %} list-group-item-success {% endif %}">
-              {{package.get_payment_state_display}}
-              </span>
-            </td>
-            <td class="border small  ">{{package.cost}}</td>
-            <td class="border small  ">{{package.tax}}</td>
-            
-            
-            <td class="table-width-80 px-1 ">
-            <div class="d-flex justify-content-between  align-items-center p-0 m-0 pt-1">
-                
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="cursor-pointer bi text-info bi-eye-fill"   
-                    viewBox="0 0 16 16" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightAdminDetail" aria-controls="offcanvasRight"
-                    
-                    hx-target="#AdminDetail"
-                    hx-swap="innerHTML"
-                    hx-trigger="click"
-                    hx-indicator="#spinnerAdminDetail"
-                   >
-                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
-                    <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
-                  </svg>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" 
-                  class="cursor-pointer bi text-warning bi-pencil-fill" viewBox="0 0 16 16" data-bs-toggle="offcanvas" 
-                  data-bs-target="#offcanvasRightAdminUpdate" aria-controls="offcanvasRight"
-                    
-                    hx-target="#AdminUpdate"
-                    hx-swap="innerHTML"
-                    hx-trigger="click"
-                    hx-indicator="#spinnerAdminUpdate">
-                    <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
-                  </svg>
-                  {% if request.user == admin %}
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="cursor-none bi text-danger  bi-x-square-fill" viewBox="0 0 16 16">
-                    <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708"/>
-                  </svg>
-                  {% else %}
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="cursor-pointer bi text-danger bi-trash3-fill"  
-                      viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#modalAdminDelete"
-                      
-                      hx-target="#AdminDelete"
-                      hx-swap="innerHTML"
-                      hx-trigger="click">
-                    <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
-                  </svg>
-                  {% endif %}
-                
-            </div>
-            </td>
-        </tr>
+{% if package %}
+  <tr class="text-center" id="TablePackage{{package.pk}}">
+    <td class="border small ">{{package.pk}}</td>
+    <td class="border small table-min text-ellipsis-username">{{package.customer.full_name}}</td>
+    <td class="border small table-min text-ellipsis-username">{{package.addressee.full_name}}</td>
+    <td class="border small table-min d-flex justify-content-around">{{package.get_state_display}}
+      <button  class="btn-sm btn d-flex justify-content-center align-items-center btn-outline-success shadow-sm border-2 border-success "
         
-    {% endfor %}
-      </tbody>
-    </table>
-  </div>
+          hx-get="{% url 'package_component_table_detail' pk=package.pk %}"
+          hx-target="#TablePackage{{package.pk}}"
+          hx-swap="outerHTML"
+          hx-trigger="click"
+          hx-indicator="#spinnerStatePackageUpdate{{package.pk}}"
+      >
+        <span id="spinnerStatePackageUpdate{{package.pk}}" class="htmx-indicator spinner-border spinner-border-sm me-2" ></span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class=" bi-check2-all" viewBox="0 0 16 16">
+            <path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0"/>
+            <path d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708"/>
+          </svg>
+      </button>
+    </td>
+    <td class="border small  ">
+      <span class=" span-1 rounded-4 list-group-item {% if package.payment_state == '1' %}  list-group-item-warning {% else %} list-group-item-success {% endif %}">
+      {{package.get_payment_state_display}}
+      </span>
+    </td>
+    <td class="border small table-min ">$ {{package.total_price}}</td>
+    
+    
+    
+    <td class="table-width-80 px-1 ">
+    <div class="d-flex justify-content-between  align-items-center p-0 m-0 pt-1">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="cursor-pointer bi text-info bi-eye-fill"   
+            viewBox="0 0 16 16" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightPackageDetail" aria-controls="offcanvasRight"
+            hx-get="{% url 'package_detail' pk=package.pk  %} "
+            hx-target="#PackageDetail"
+            hx-swap="innerHTML"
+            hx-trigger="click"
+            hx-indicator="#spinnerPackageDetail"
+          >
+            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" 
+          class="cursor-pointer bi text-warning bi-pencil-fill" viewBox="0 0 16 16" 
+          data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightPackageUpdate" aria-controls="offcanvasRight"
+           hx-get="{% url 'package_update' pk=package.pk  %} " 
+            hx-target="#PackageUpdateForm"
+            hx-swap="innerHTML"
+            hx-trigger="click"
+            hx-indicator="#spinnerPackageUpdate">
+            <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
+          </svg>
+          
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="cursor-pointer bi text-danger bi-trash3-fill"  
+              viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#modalPackageDelete"
+              hx-get="{% url 'package_delete' pk=package.pk  %} "
+              hx-target="#PackageDelete"
+              hx-swap="innerHTML"
+              hx-trigger="click">
+            <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+          </svg>
+        
+        
+    </div>
+    </td>
+  </tr>
 
-  {% endif %}
+{% endif %}

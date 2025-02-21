@@ -69,7 +69,7 @@ class Package(models.Model):
     
     @property
     def total_price(self):
-        return self.cost - self.tax
+        return round(self.cost - self.tax,2)
     
 class ImagePackage(models.Model):
     package = models.ForeignKey(Package,on_delete=models.CASCADE,related_name='image_package')
