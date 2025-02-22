@@ -20,7 +20,7 @@
       </button>
     </td>
     <td class="border small  ">
-      <span class=" span-1 rounded-4 list-group-item {% if package.payment_state == '1' %}  list-group-item-warning {% else %} list-group-item-success {% endif %}">
+      <span class=" span-1 rounded-4 list-group-item small p-1 {% if package.payment_state == '1' %}  list-group-item-warning {% else %} list-group-item-success {% endif %}">
       {{package.get_payment_state_display}}
       </span>
     </td>

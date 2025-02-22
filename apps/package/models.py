@@ -32,6 +32,10 @@ class Addressee(models.Model):
         return self.full_name
     
     
+
+
+    
+    
 class Package(models.Model):
     PAYMENT_STATE=(
         ('1','pendiente'),
@@ -82,3 +86,31 @@ class ImagePackage(models.Model):
 
     def __str__(self):
         return f"{self.pk}"
+    
+
+class Order(models.Model):
+    STATE=(
+        ('1','gestionando'),
+        ('2','completado'),
+        ('3','en camino'),
+        ('4','entregado'),
+    )
+    state = models.CharField(max_length=1, choices=STATE,default='1')
+    sent_date= models.DateField(auto_now=False,null=True,blank=True)
+    delivery_date= models.DateField(auto_now=False,null=True,blank=True)
+    packages = models.ManyToManyField(Package,blank=True)
+    
+    class Meta:
+        verbose_name = "Order"
+        verbose_name_plural = "Orders"
+
+    def __str__(self):
+        return f"{self.pk}"
+    
+    @property
+    def total_price(self):
+        return round(sum(package.total_price for package in self.packages.all()) or 0 ,2)
+    
+    @property
+    def total_packages(self):
+        return self.packages.all().count()

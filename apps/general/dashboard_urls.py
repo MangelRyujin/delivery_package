@@ -8,6 +8,7 @@ urlpatterns = [
     path('customers/',include('apps.package.urls.customer_urls')),
     path('addressees/',include('apps.package.urls.addressee_urls')),
     path('packages/',include('apps.package.urls.package_urls')),
+    path('order_in_proccess/',include('apps.package.urls.order_proccess_urls')),
     path('perfil/', change_information, name='change_information'),
     
 

@@ -1,6 +1,6 @@
 from django import forms
 
-from apps.package.models import ImagePackage, Package
+from apps.package.models import ImagePackage, Order, Package
 
 # from apps.accounts.models import Profile
 
@@ -23,3 +23,11 @@ class CreateImagePackageForm(forms.ModelForm):
     class Meta:
         model = ImagePackage
         fields = ['image']
+
+
+
+class CreateOrderForm(forms.ModelForm):
+    
+    class Meta:
+        model = Order
+        fields = '__all__'

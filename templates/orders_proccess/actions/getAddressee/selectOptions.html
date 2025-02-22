@@ -1,0 +1,21 @@
+<select class="form-control selectpicker w-100"   
+                    data-show-subtext="true" 
+                    data-live-search="true"
+                    required
+                    name="addressee"
+                    id="SelectAddresseeCreate">
+                    <option value="" selected>
+                      Seleccionar destinatario
+                    </option>
+                    {% for addressee in addressees %}
+                      <option value="{{addressee.pk}}" {% if package.addressee.pk == addressee.pk %}selected{% endif %}>
+                        {{addressee.pk}} - {{addressee.full_name}}
+                      </option>
+                    {% endfor %}
+                  </select>
+                  <span id="spinnerSelectAddresseeCreateComponent" class="htmx-indicator small " >Cargando destinatarios...</span>
+                  <script>
+                    $(document).ready(function() {
+                        $('.selectpicker').selectpicker();
+                      });
+                  </script>
