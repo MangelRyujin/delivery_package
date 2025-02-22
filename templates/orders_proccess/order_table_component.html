@@ -4,7 +4,7 @@
   <tr class="text-center" id="TableOrder{{order.pk}}">
     <td class="border small ">{{order.pk}}</td>
     <td class="border small table-min d-flex justify-content-around">
-      <span class=" span-1 rounded-4 list-group-item small p-1 {% if order.state == '1' %}  list-group-item-warning {% else %} list-group-item-success {% endif %}">
+      <span class=" span-1 rounded-4 list-group-item small p-1 {{order.bg_proccess}}">
         {{order.get_state_display}}
         </span>
        </td>
@@ -38,7 +38,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="cursor-pointer bi text-info bi-eye-fill"   
             viewBox="0 0 16 16" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightOrderDetail" aria-controls="offcanvasRight"
             
-            {% comment %} hx-get="{% url 'Order_detail' pk=Order.pk  %} " {% endcomment %}
+            hx-get="{% url 'order_detail' pk=order.pk  %} " 
             hx-target="#OrderDetail"
             hx-swap="innerHTML"
             hx-trigger="click"
@@ -50,7 +50,7 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" 
           class="cursor-pointer bi text-warning bi-pencil-fill" viewBox="0 0 16 16" 
           data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightOrderUpdate" aria-controls="offcanvasRight"
-           {% comment %} hx-get="{% url 'Order_update' pk=Order.pk  %} "  {% endcomment %}
+           hx-get="{% url 'order_update' pk=order.pk  %} " 
             hx-target="#OrderUpdateForm"
             hx-swap="innerHTML"
             hx-trigger="click"

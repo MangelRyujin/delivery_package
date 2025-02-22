@@ -24,7 +24,7 @@
     {% endif %}
 
   
-{% if orders %}
+{% if pagination %}
 
 <div class="table-responsive table-bordered mt-0" >
   <table class="table table-hover">
@@ -39,13 +39,81 @@
       </tr>
     </thead>
     <tbody>
-    {% for order in orders %}
+    {% for order in pagination %}
         {% include "orders_proccess/order_table_component.html" %}
     {% endfor %}
+    
       </tbody>
     </table>
   </div>
-  
+  {% if pagination.has_next or pagination.has_previous%}
+    <nav aria-label="Page navigation example ">
+      <ul class="pagination justify-content-center justify-content-md-end mt-2">
+        {% if pagination.has_previous %}
+        <li class="page-item">
+          <a
+            class="page-link cursor-pointer"
+            hx-get="{% url 'orders_results_view' %}?page=1&{{ parameters }}"
+            hx-target="#OrderResults"
+            hx-indicator="#spinner"
+          >
+            Inicio
+          </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <a class="page-link cursor-pointer">Inicio</a>
+        </li>
+
+        {% endif %} {% for page_number in pagination.paginator.page_range %} 
+        {%if pagination.number|add:'-2' <= page_number and pagination.number|add:"2" >= page_number%} {%if pagination.number == pagination.paginator.num_pages %}
+        <li
+          class="page-item {% if page_number == pagination.number %}active{% endif %}"
+        >
+          
+          <a
+            class="page-link cursor-pointer"
+            hx-get="{% url 'orders_results_view' %}?page={{ page_number }}&{{ parameters }}"
+            hx-target="#OrderResults"
+            hx-indicator="#spinner"
+          >
+            {{ page_number }}
+          </a>
+        </li>
+        {% else %}
+        <li
+          class="page-item {% if page_number == pagination.number %}active{% endif %}"
+        >
+          <a
+            class="page-link cursor-pointer"
+            hx-get="{% url 'orders_results_view' %}?page={{ page_number }}&{{ parameters }}"
+            hx-target="#OrderResults"
+            hx-indicator="#spinner"
+          >
+            {{ page_number }}
+          </a>
+          
+        </li>
+        {% endif %} {% endif %} {% endfor %} {% if pagination.has_next %}
+        <li class="page-item">
+          <a
+            class="page-link cursor-pointer"
+            hx-get="{% url 'orders_results_view' %}?page={{ pagination.paginator.num_pages }}&{{ parameters }}"
+            hx-target="#OrderResults"
+            hx-indicator="#spinner"
+          >
+            Fin
+          </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <a class="page-link cursor-pointer">Fin</a>
+        </li>
+
+        {% endif %}
+      </ul>
+    </nav>
+    {% endif %}
 
 {% else %}
 <div class="container">

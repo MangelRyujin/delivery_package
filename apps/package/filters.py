@@ -1,5 +1,5 @@
 import django_filters
-from apps.package.models import Addressee, Customer
+from apps.package.models import Addressee, Customer, Order
   
 
 class CustomerFilter(django_filters.FilterSet):
@@ -30,3 +30,14 @@ class AddresseeFilter(django_filters.FilterSet):
         model = Addressee
         fields = ['pk','full_name','customer_email','phone_number','address','province','municipe']
         
+
+
+class OrderFilter(django_filters.FilterSet):
+    pk = django_filters.CharFilter(lookup_expr='icontains')
+    state=  django_filters.CharFilter(lookup_expr='exact')
+    
+
+    
+    class Meta:
+        model = Order
+        fields = ['pk','state']

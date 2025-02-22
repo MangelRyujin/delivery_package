@@ -98,7 +98,7 @@ class Order(models.Model):
     state = models.CharField(max_length=1, choices=STATE,default='1')
     sent_date= models.DateField(auto_now=False,null=True,blank=True)
     delivery_date= models.DateField(auto_now=False,null=True,blank=True)
-    packages = models.ManyToManyField(Package,blank=True)
+    packages = models.ManyToManyField(Package,blank=True,related_name='orders')
     
     class Meta:
         verbose_name = "Order"
@@ -114,3 +114,15 @@ class Order(models.Model):
     @property
     def total_packages(self):
         return self.packages.all().count()
+    
+    @property
+    def bg_proccess(self):
+        if self.state == '1':
+            return 'list-group-item-warning '
+        elif self.state == '2':
+            return 'list-group-item-success '
+        elif self.state == '3':
+            return 'list-group-item-info '
+        else: 
+            return 'list-group-item-primary'
+        
