@@ -78,7 +78,7 @@
           </div>
           <div class="col-12 mt-4">
             <label for="{{form.phone_number.id_for_label}}Create" class="form-label">Móvil</label>
-            <input type="text" name="phone_number" value="{% if form.phone_number.value  %}{{form.phone_number.value}}{% else %}{% endif %}" class="form-control" id="{{form.phone_number.id_for_label}}Create" placeholder="Móvil">
+            <input type="text" name="phone_number" required value="{% if form.phone_number.value  %}{{form.phone_number.value}}{% else %}{% endif %}" class="form-control" id="{{form.phone_number.id_for_label}}Create" placeholder="Móvil">
             {% if form.phone_number.errors %}
             <div class="alert alert-danger mt-2">
                 {% for error in form.phone_number.errors %}
@@ -89,7 +89,7 @@
           </div>
           <div class="col-12  mt-4">
             <label for="{{ form.address.id_for_label }}Create" class="form-label">Dirección</label>
-            <input type="text" name="address" value="{% if form.address.value %}{{ form.address.value }}{% else %}{% endif %}" class="form-control" id="{{ form.address.id_for_label }}Create" placeholder="Dirección">
+            <input type="text" name="address" required value="{% if form.address.value %}{{ form.address.value }}{% else %}{% endif %}" class="form-control" id="{{ form.address.id_for_label }}Create" placeholder="Dirección">
             {% if form.address.errors %}
             <div class="alert alert-danger mt-2">
                 {% for error in form.address.errors %}

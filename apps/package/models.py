@@ -4,13 +4,13 @@ from django.core.validators import MinValueValidator
 # Create your models here.
 class Customer(models.Model):
     full_name = models.CharField(max_length=120)
-    phone_number = models.CharField(max_length=20,null=False,blank=False)
+    phone_number = models.CharField(max_length=20,null=False,blank=False,unique=True)
     address=models.CharField(max_length=150,null=True,blank=True)
     email = models.EmailField(unique=True,null=True,blank=True)
     
     class Meta:
-        verbose_name = "Customer"
-        verbose_name_plural = "Customers"
+        verbose_name = "Cliente"
+        verbose_name_plural = "Clientes"
 
     def __str__(self):
         return self.full_name
@@ -20,13 +20,13 @@ class Addressee(models.Model):
     full_name = models.CharField(max_length=120)
     province = models.CharField(max_length=20)
     municipe = models.CharField(max_length=20)
-    phone_number = models.CharField(max_length=20)
+    phone_number = models.CharField(max_length=20,unique=True)
     address=models.CharField(max_length=150)
     customer = models.ForeignKey(Customer,on_delete=models.CASCADE,related_name='custommer_addressee')
     
     class Meta:
-        verbose_name = "Addressee"
-        verbose_name_plural = "Addressees"
+        verbose_name = "Destinatario"
+        verbose_name_plural = "Destinatarios"
 
     def __str__(self):
         return self.full_name
@@ -65,8 +65,8 @@ class Package(models.Model):
     
     
     class Meta:
-        verbose_name = "Package"
-        verbose_name_plural = "Packages"
+        verbose_name = "Paquete"
+        verbose_name_plural = "Paquetes"
 
     def __str__(self):
         return f"{self.pk}"
@@ -81,8 +81,8 @@ class ImagePackage(models.Model):
     
     
     class Meta:
-        verbose_name = "Image Package"
-        verbose_name_plural = "Images Package"
+        verbose_name = "Imágen"
+        verbose_name_plural = "Imágenes"
 
     def __str__(self):
         return f"{self.pk}"
@@ -101,8 +101,8 @@ class Order(models.Model):
     packages = models.ManyToManyField(Package,blank=True,related_name='orders')
     
     class Meta:
-        verbose_name = "Order"
-        verbose_name_plural = "Orders"
+        verbose_name = "Envío"
+        verbose_name_plural = "Envíos"
 
     def __str__(self):
         return f"{self.pk}"

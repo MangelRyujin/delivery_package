@@ -1,9 +1,11 @@
 
 from django.urls import path
 from apps.package.views.package_views import *
+from apps.package.views.send_email import send_email_view
 
 urlpatterns = [
     path('',packages_view,name='packages_view'),
+    path('send_email_view',send_email_view,name='send_email_view'),
     path('packages_results_view/',packages_results_view,name='packages_results_view'),
     path('package_create/',package_create,name='package_create'),
     path('package_detail/<int:pk>/',package_detail,name='package_detail'),

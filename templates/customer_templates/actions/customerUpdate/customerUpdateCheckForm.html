@@ -37,7 +37,7 @@
                     {% endif %}      
               </div>
               
-              <div class="col-12">
+              <div class="col-12 mt-4">
                 <label for="{{form.phone_number.id_for_label}}" class="form-label">Móvil</label>
                 <input type="text" required name="phone_number" value="{% if form.phone_number.value  %}{{form.phone_number.value}}{% else %}{% endif %}" class="form-control" id="{{form.phone_number.id_for_label}}" placeholder="Móvil">
                 {% if form.phone_number.errors %}
@@ -48,7 +48,7 @@
                 </div>
                 {% endif %}      
               </div>
-              <div class="col-12">
+              <div class="col-12 mt-4">
                 <label for="{{ form.address.id_for_label }}" class="form-label">Dirección</label>
                 <input type="text" required name="address" value="{% if form.address.value %}{{ form.address.value }}{% else %}{% endif %}" class="form-control" id="{{ form.address.id_for_label }}" placeholder="Dirección">
                 {% if form.address.errors %}

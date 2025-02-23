@@ -48,6 +48,7 @@ def customer_update(request,pk):
     customer = get_object_or_404(Customer,pk=pk)
     form = CustomerForm(instance=customer)
     context={
+        'form':form
     }
     if request.method == "POST":
         form = CustomerForm(request.POST,instance=customer)
@@ -57,8 +58,9 @@ def customer_update(request,pk):
         else:
             message="Corrige los errores"
             context['error']=message
+        context['form']=form
     context['customer']=customer
-    context['form']=form
+    
     return render(request,'customer_templates/actions/customerUpdate/customerUpdateCheckForm.html',context) 
 
 # Show customer table

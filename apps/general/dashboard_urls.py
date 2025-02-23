@@ -1,6 +1,7 @@
 from django.urls import path,include
 from apps.general.views.general_views import dashboard_view
 from apps.account.views.admin_views import change_information
+from apps.package.views.send_email import validate_addressee_orders_view
 
 urlpatterns = [
     path('',dashboard_view,name='dashboard_view'),
@@ -12,6 +13,7 @@ urlpatterns = [
     path('orders_successfull/',include('apps.package.urls.order_successfull_urls')),
     path('perfil/', change_information, name='change_information'),
     path('reports/', include('apps.package.urls.delivery_order_urls')),
+    path('validate_addressee/', validate_addressee_orders_view, name='validate_addressee_orders_view'),
     
 
 ]

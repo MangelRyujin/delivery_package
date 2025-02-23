@@ -64,8 +64,8 @@ def addressee_update(request,pk):
         else:
             message="Corrige los errores"
             context['error']=message
+        context['form']=form
     context['addressee']=addressee
-    
     return render(request,'addressee_templates/actions/addresseeUpdate/addresseeUpdateCheckForm.html',context) 
 
 # Show addressee table

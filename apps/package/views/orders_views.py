@@ -7,6 +7,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 import logging
 from apps.account.decorators import group_required
 from utils.paginator import _create_paginator
+from utils.send_email import order_in_proccess_send_customer_email, send_email_to_customer
 logger = logging.getLogger(__name__)
 from django.db.models import Q
 from django.utils.translation import gettext as _
@@ -109,6 +110,7 @@ def order_update(request,pk):
         form =   UpdateOrderForm(request.POST,instance=order)
         if form.is_valid():
             form.save()
+            order_in_proccess_send_customer_email(order)      
             context['form']=form
             context['message']="Editado correctamente"
         else:
