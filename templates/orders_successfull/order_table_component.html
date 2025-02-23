@@ -1,0 +1,55 @@
+{% load static %}
+
+{% if order %}
+  <tr class="text-center" id="TableOrder{{order.pk}}">
+    <td class="border small ">{{order.pk}}</td>
+    <td class="border small table-min d-flex justify-content-around">
+      <span class=" span-1 rounded-4 list-group-item small p-1 {{order.bg_proccess}}">
+        {{order.get_state_display}}
+        </span>
+       </td>
+    <td class="border small table-min ">$ {{order.total_price}}</td>
+    <td class="border small table-min ">
+      {{order.total_packages}}
+          {% if order.packages.all %}
+                       
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="border-2 rounded-1 border border-primary-subtle text-primary cursor-pointer bi-plus" viewBox="0 0 16 16"
+                  tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-title="Paquetes" 
+                  data-bs-content="{% for package in order.packages.all %}{{ package.pk }}{% if not forloop.last %}, {% endif %} {% endfor %}">
+                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                </svg>
+                          
+                <script>
+          
+                  if (!window.popoverTriggerList) {
+                    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+                    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+                  }
+                  
+                </script>
+                    {% endif %}
+    </td>
+    
+   
+    
+    <td class="table-width-80 px-1 ">
+    <div class="d-flex justify-content-around  align-items-center p-0 m-0 pt-1">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="cursor-pointer bi text-info bi-eye-fill"   
+            viewBox="0 0 16 16" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightOrderDetail" aria-controls="offcanvasRight"
+            
+            hx-get="{% url 'orders_successfull_detail' pk=order.pk  %} " 
+            hx-target="#OrderDetail"
+            hx-swap="innerHTML"
+            hx-trigger="click"
+            hx-indicator="#spinnerOrderDetail"
+          >
+            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+          </svg>
+        
+    </div>
+    </td>
+  </tr>
+  
+{% endif %}

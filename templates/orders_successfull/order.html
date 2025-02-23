@@ -1,0 +1,77 @@
+{% extends "base_admin.html" %}
+{% load static %}
+
+{% block title %} Envíos {% endblock %}
+{% block contend %}
+  {% include "orders_successfull/actions/orderDetail/offcanvasRightOrderDetail.html" %}
+  
+  
+
+   
+  <form class="row g-3 mb-2"
+  method="GET"
+  id="OrderFilters"
+  hx-get="{% url 'orders_successfull_results_view' %}"
+  hx-target="#OrderResults"
+  hx-swap="innerHTML"
+  hx-trigger="submit"
+  hx-indicator="#spinnerOrderFilter,#spinner">
+
+<div class="col-6 col-sm-4 col-md-4 col-lg-3">
+<label for="inputOrderCodeFilter" class="form-label">Código</label>
+<input type="text" name="pk" class="form-control" id="inputOrderCodeFilter" placeholder="Código">
+</div>
+
+<div class="col-6 col-sm-4 col-md-4 col-lg-3">
+<label for="inputStateFilter" class="form-label">Estado</label>
+<select id="inputStateFilter" name="state" class="form-select">
+<option value='' selected>Seleccionar estado</option>
+<option value="1">Gestionando</option>
+<option value="2">Completado</option>
+<option value="3">En camino</option>
+</select>
+</div>
+
+<div class="col-12">
+<small class=" w-100 d-flex justify-content-end mt-3">
+  <button type="submit" class="btn d-flex justify-content-center align-items-center btn-outline-primary shadow-sm border-2 border-primary px-5">
+    <span id="spinnerOrderFilter" class="htmx-indicator spinner-border spinner-border-sm me-2" ></span>Filtrar</button>
+</small>
+</div>
+</form>
+  
+ <div 
+ hx-get="{% url 'orders_successfull_results_view' %}"
+ hx-target="#OrderResults"
+ hx-trigger="load"
+ hx-swap="innerHTML"
+ hx-indicator="#spinner"></div>
+    
+  <div class="w-100 position-relative d-flex justify-content-center align-items-start mb-5 pb-5" style="min-height: 200px !important;" >
+    <div id="spinner" class="htmx-indicator w-100 h-100  loadding-blur position-absolute z-10 d-flex justify-content-center align-items-center"
+    style="min-height: 200px !important;z-index: 100;">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    
+    <div class="w-100 mt-3" id="OrderResults">
+      
+    </div>  
+    </div>
+    
+     
+
+  
+
+  
+
+
+  
+
+
+ 
+    
+{% endblock contend %}
+
+        

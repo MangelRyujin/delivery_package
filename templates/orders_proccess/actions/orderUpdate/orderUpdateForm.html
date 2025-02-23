@@ -78,7 +78,7 @@
             </div>
             <div class="col-12 mt-4">
               <label for="{{ form.delivery_date.id_for_label }}" class="form-label">Fecha de entrega</label>
-              <input type="date" class="form-control"  value="{{order.delivery_date|date:'Y-m-d'}}" name="delivery_date" id="{{ form.delivery_date.id_for_label }}">
+              <input type="date" class="form-control" required value="{{order.delivery_date|date:'Y-m-d'}}" name="delivery_date" id="{{ form.delivery_date.id_for_label }}">
               {% if form.delivery_date.errors %}
               <div class="alert alert-danger mt-2">
                   {% for error in form.delivery_date.errors %}
