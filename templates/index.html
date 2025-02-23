@@ -52,9 +52,33 @@
           <div class="mb-2 flex justify-content-center w-100">
           <img src="{% static "img/packages.svg" %}" height="250" width="100%"/>
           </div>
-          <p>Gestionar destinatarios de sus clientes.</p>
+          <p>Gestionar paquetes de sus clientes.</p>
           <div class="d-flex justify-content-end">
-            <a href="#" class="btn btn-primary fw-bold" type="button">Ver más</a>
+            <a href="{% url "packages_view" %}" class="btn btn-primary fw-bold" type="button">Ver más</a>
+        </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="h-100 p-3 bg-body-tertiary border rounded-3">
+          <h2>Envíos</h2>
+          <div class="mb-2 flex justify-content-center w-100">
+          <img src="{% static "img/order_in_proccess.svg" %}" height="250" width="100%"/>
+          </div>
+          <p>Gestionar el proceso de envíos.</p>
+          <div class="d-flex justify-content-end">
+            <a href="{% url "orders_view" %}" class="btn btn-primary fw-bold" type="button">Ver más</a>
+        </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="h-100 p-3 bg-body-tertiary border rounded-3">
+          <h2>Envíos entregados</h2>
+          <div class="mb-2 flex justify-content-center w-100">
+          <img src="{% static "img/order_success.svg" %}" height="250" width="100%"/>
+          </div>
+          <p>Detalle de los envíos realizados.</p>
+          <div class="d-flex justify-content-end">
+            <a href="{% url "orders_successfull_views" %}" class="btn btn-primary fw-bold" type="button">Ver más</a>
         </div>
         </div>
       </div>
@@ -67,7 +91,7 @@
           </div>
           <p>Reportes de las entregas realizadas.</p>
           <div class="d-flex justify-content-end">
-            <a href="#" class="btn btn-primary fw-bold" type="button">Ver más</a>
+            <a href="{% url "report_delivery_order_view" %}" class="btn btn-primary fw-bold" type="button">Ver más</a>
         </div>
         </div>
       </div>
