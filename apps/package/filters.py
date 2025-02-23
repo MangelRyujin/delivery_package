@@ -41,3 +41,11 @@ class OrderFilter(django_filters.FilterSet):
     class Meta:
         model = Order
         fields = ['pk','state']
+        
+class DeliveryOrderFilter(django_filters.FilterSet):
+    delivery_date =django_filters.DateFromToRangeFilter()
+
+    class Meta:
+        model = Order
+        fields = ['delivery_date',]
+        

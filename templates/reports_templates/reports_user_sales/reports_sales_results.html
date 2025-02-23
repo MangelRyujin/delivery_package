@@ -1,82 +1,59 @@
 {% load static %}
-{% if items or extra_items %}
-{% if items %}
-<div class="table-responsive table-bordered mt-0" >
-    <caption>Servicios mostrados {{items|length}}</caption>
-    <table class="table table-hover">
-      <thead>
-        <tr class="text-center">
-          <th  scope="col">Placa</th>
-          <th  scope="col">Servicio</th>
-          <th scope="col">Importe</th>
-        </tr>
-      </thead>
-      <tbody>
-      {% for item in items %}
-          <tr class="text-center">
-              <td class="border small ">{{item.order.client_car_plaque}}</td>  
-              <td class="border small table-min">{{item.service.name}}</td> 
-              <td class="border small">{{item.price|floatformat:2}}</td>  
-          </tr>
-          
-      {% endfor %}
-        <tr class="text-center table-primary">
-            <td class="border small table-min">Total</td>  
-            <td class="border small ">{{item_total_count}}</td>  
-            <td class="border small">{{item_total_price|floatformat:2}}</td>   
-        </tr>
-        </tbody>
-      </table>
-    </div>
-    {% endif %}
-    {% if extra_items %}
-    <div class="table-responsive table-bordered mt-3" >
-      <caption>Servicios extra mostrados {{extra_items|length}}</caption>
+{% if orders %}
+    <div class="table-responsive table-bordered mt-0" >
+      <caption>Envios mostrados {{orders|length}}</caption>
       <table class="table table-hover">
         <thead>
           <tr class="text-center">
-            <th  scope="col">Placa</th>
-            <th  scope="col">Servicio extra</th>
+            <th  scope="col">Código</th>
+            <th  scope="col">Fecha de creación</th>
+            <th  scope="col">Fecha de entrega</th>
+            
+            <th  scope="col">Paquetes</th>
             <th scope="col">Importe</th>
           </tr>
         </thead>
         <tbody>
-        {% for extra_item in extra_items %}
+        {% for order in orders %}
             <tr class="text-center">
-                <td class="border small ">{{extra_item.order.client_car_plaque}}</td>  
-                <td class="border small table-min">{{extra_item.description}}</td> 
-                <td class="border small">{{extra_item.price|floatformat:2}}</td>  
+                <td class="border small ">{{order.pk}}</td>  
+                <td class="border small table-min">{{order.sent_date}}</td> 
+                <td class="border small ">{{order.delivery_date}}</td>  
+                <td class="border small table-min">{{order.total_packages}}
+                  {% if order.packages.all %}
+                       
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="border-2 rounded-1 border border-primary-subtle text-primary cursor-pointer bi-plus" viewBox="0 0 16 16"
+                  tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-title="Paquetes" 
+                  data-bs-content="{% for package in order.packages.all %}{{ package.pk }}{% if not forloop.last %}, {% endif %} {% endfor %}">
+                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                </svg>
+                          
+                <script>
+          
+                  if (!window.popoverTriggerList) {
+                    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+                    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+                  }
+                  
+                </script>
+                    {% endif %}
+                </td> 
+                <td class="border small">{{order.total_price}}</td>  
             </tr>
             
         {% endfor %}
           <tr class="text-center table-primary">
               <td class="border small table-min">Total</td>  
-              <td class="border small ">{{extra_item_total_count}}</td>  
-              <td class="border small">{{extra_item_total_price|floatformat:2}}</td>   
+              <td class="border small ">-</td>  
+              <td class="border small table-min">-</td>  
+              <td class="border small ">{{item_total_count}}</td>  
+              <td class="border small">{{item_total_price|floatformat:2}}</td>   
           </tr>
           </tbody>
         </table>
       </div>
-      {% endif %}
-      <div class="table-responsive table-bordered mt-3" >
-        <caption>Cobros</caption>
-        <table class="table table-hover">
-          <thead>
-            <tr class="text-center">
-              <th  scope="col">Importe total</th>
-              <th  scope="col">60%</th>
-              <th scope="col">40%</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="text-center table-primary">
-                <td class="border small table-min">{{total_price|floatformat:2}}</td>  
-                <td class="border small ">{{total_price_60|floatformat:2}}</td>  
-                <td class="border small">{{total_price_40|floatformat:2}}</td>   
-            </tr>
-            </tbody>
-          </table>
-        </div>
+    
+    
    
     {% else %}
     <div class="row flex-column justify-content-center">

@@ -11,6 +11,7 @@ urlpatterns = [
     path('order_in_proccess/',include('apps.package.urls.order_proccess_urls')),
     path('orders_successfull/',include('apps.package.urls.order_successfull_urls')),
     path('perfil/', change_information, name='change_information'),
+    path('reports/', include('apps.package.urls.delivery_order_urls')),
     
 
 ]
