@@ -35,7 +35,7 @@ class AddresseeFilter(django_filters.FilterSet):
 class OrderFilter(django_filters.FilterSet):
     pk = django_filters.CharFilter(lookup_expr='icontains')
     state=  django_filters.CharFilter(lookup_expr='exact')
-    
+    sent_date = django_filters.DateFilter()
 
     
     class Meta:

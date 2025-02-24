@@ -16,7 +16,7 @@ from django.utils.translation import gettext as _
 @group_required('administrador','gestor')
 @staff_member_required(login_url='/')
 def orders_view(request):
-    orders = Order.objects.filter(state__in=['1','2','3',]).order_by('-id')
+    orders = Order.objects.filter(state__in=['1','2']).order_by('-id')
     context = {
         'admin':User.objects.all(),
         'orders':orders,
@@ -37,7 +37,7 @@ def orders_results_view(request):
 # orders search funtion
 @staff_member_required(login_url='/')
 def _show_orders(request):
-    return _create_paginator(request,OrderFilter(request.GET, queryset=Order.objects.filter(state__in=['1','2','3',]).order_by('-pk')))
+    return _create_paginator(request,OrderFilter(request.GET, queryset=Order.objects.filter(state__in=['1','2']).order_by('-pk')))
     
    
 
@@ -46,7 +46,7 @@ def _show_orders(request):
 @group_required('administrador','gestor')
 @staff_member_required(login_url='/')
 def order_detail(request,pk):
-    order = Order.objects.filter(pk=pk,state__in=['1','2','3',]).first()
+    order = Order.objects.filter(pk=pk,state__in=['1','2']).first()
     context={'order':order}
     return render(request,'orders_proccess/actions/orderDetail/orderDetail.html',context) 
 
@@ -55,7 +55,7 @@ def order_detail(request,pk):
 @group_required('administrador','gestor')
 @staff_member_required(login_url='/')
 def order_component_table_detail(request,pk):
-    order = Order.objects.filter(pk=pk,state__in=['1','2','3',]).first()
+    order = Order.objects.filter(pk=pk,state__in=['1','2']).first()
     context={'order':order}
     return render(request,'orders_proccess/order_table_component.html',context) 
 

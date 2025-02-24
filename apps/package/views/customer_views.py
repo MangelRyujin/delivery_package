@@ -68,3 +68,5 @@ def customer_update(request,pk):
 @staff_member_required(login_url='/')
 def _show_customer(request):
     return _create_paginator(request,CustomerFilter(request.GET, queryset=Customer.objects.all().order_by('email')))
+
+

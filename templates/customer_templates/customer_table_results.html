@@ -31,6 +31,7 @@
         <thead>
           <tr class="text-center">
             <th  scope="col">Código</th>
+            <th  scope="col">Código de envio</th>
             <th  scope="col">Email</th>
             <th  scope="col">Nombres y apellidos</th>
           
@@ -42,6 +43,7 @@
         {% for customer in pagination %}
             <tr class="text-center">
               <td class="border small pt-2 ">{{customer.pk}}</td>
+              <td class="border small pt-2 table-min">{{customer.delivery_code}}</td>
                 <td class="border small pt-2 table-min">{% if customer.email %}{{customer.email}}{% else %}-{% endif %}</td>   
                 <td class="border small pt-2 table-min text-ellipsis-username">{{customer.full_name}}</td>
                  

@@ -72,8 +72,9 @@
             <li><span class=" small">Método de pago: {{package.get_payment_method_display}}</span></li>
             <li><span class=" small">Costo: $ {{package.cost}}</span></li>
             <li><span class=" small">Impuesto: $ {{package.tax}}</span></li>
+            <li><span class=" small">Peso: {{package.weight}} libras</span></li>
             <li><span class=" small">Precio total: $ {{package.total_price}}</span></li>
-            <li><span class=" small">Peso: {{package.weight}}</span></li>
+            <li><span class=" small">Bultos: {{package.bulk}}</span></li>
             {% if package.message %}
               <li><span class=" small">Descripción: {{package.message}}</span></li>
             {% endif %}

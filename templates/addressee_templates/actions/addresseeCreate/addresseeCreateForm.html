@@ -22,7 +22,7 @@
                     </option>
                     {% for customer in customers %}
                       <option value="{{customer.pk}}" {% if form.customer.value|default:'' == customer.pk|stringformat:'s' %}selected{% endif %}>
-                        {{customer.email}}
+                        {{customer.pk}} - {{customer.full_name}}
                       </option>
                     {% endfor %}
                   </select>

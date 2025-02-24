@@ -1,5 +1,15 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+import uuid
+
+
+def generate_delivery_code():
+    while True:
+        delivery_code = str(uuid.uuid4().int)[:8]  # Trunca el UUID a 8 caracteres
+        if not Customer.objects.filter(delivery_code=delivery_code).exists():
+            break
+    return delivery_code
+
 
 # Create your models here.
 class Customer(models.Model):
@@ -7,6 +17,7 @@ class Customer(models.Model):
     phone_number = models.CharField(max_length=20,null=False,blank=False,unique=True)
     address=models.CharField(max_length=150,null=True,blank=True)
     email = models.EmailField(unique=True,null=True,blank=True)
+    delivery_code = models.CharField(max_length=8,null=True,blank=True)
     
     class Meta:
         verbose_name = "Cliente"
@@ -15,6 +26,10 @@ class Customer(models.Model):
     def __str__(self):
         return self.full_name
 
+    def save(self, *args, **kwargs):
+        if not self.delivery_code:
+            self.delivery_code = generate_delivery_code()
+        super().save(*args, **kwargs)
     
 class Addressee(models.Model):
     full_name = models.CharField(max_length=120)
@@ -30,11 +45,7 @@ class Addressee(models.Model):
 
     def __str__(self):
         return self.full_name
-    
-    
-
-
-    
+        
     
 class Package(models.Model):
     PAYMENT_STATE=(
@@ -44,6 +55,7 @@ class Package(models.Model):
     STATE=(
         ('1','en proceso'),
         ('2','completado'),
+        ('3','entregado')
         
     )
     PAYMENT_METHOD=(
@@ -51,18 +63,21 @@ class Package(models.Model):
         ('2','transferencia'),
         ('3','tarjeta'),
     )
+    
     customer = models.ForeignKey(Customer,on_delete=models.CASCADE,related_name='custommer_package')
     addressee = models.ForeignKey(Addressee,on_delete=models.CASCADE,related_name='addressee_package')
     cost = models.FloatField(validators=[MinValueValidator(0)])
     weight = models.FloatField(validators=[MinValueValidator(0)])
     tax = models.FloatField(validators=[MinValueValidator(0)])
     message = models.TextField(null=True,blank=True)
+    bulk = models.PositiveIntegerField(default=0)
     state = models.CharField(max_length=1, choices=STATE,default='1')
     created_at= models.DateTimeField(auto_now=True)
+    is_delivery = models.BooleanField(default=False)
     payment_state = models.CharField(max_length=1, choices=PAYMENT_STATE,default='1')
     payment_method = models.CharField(max_length=1, choices=PAYMENT_METHOD,default='1')
     payment_datetime= models.DateTimeField(auto_now=False,null=True,blank=True)
-    
+    delivery_datetime = models.DateTimeField(auto_now=False,null=True,blank=True)
     
     class Meta:
         verbose_name = "Paquete"
@@ -73,7 +88,13 @@ class Package(models.Model):
     
     @property
     def total_price(self):
-        return round(self.cost - self.tax,2)
+        return round((self.cost * self.weight) + self.tax,2)
+    
+    @property
+    def is_completed(self):
+        if self.payment_state == '2' and self.bulk !=0:
+            return True
+        return False
     
 class ImagePackage(models.Model):
     package = models.ForeignKey(Package,on_delete=models.CASCADE,related_name='image_package')
@@ -90,10 +111,9 @@ class ImagePackage(models.Model):
 
 class Order(models.Model):
     STATE=(
-        ('1','gestionando'),
-        ('2','completado'),
-        ('3','en camino'),
-        ('4','entregado'),
+        ('1','completado'),
+        ('2','en camino'),
+        ('3','entregado'),
     )
     state = models.CharField(max_length=1, choices=STATE,default='1')
     sent_date= models.DateField(auto_now=False,null=True,blank=True)
@@ -118,10 +138,8 @@ class Order(models.Model):
     @property
     def bg_proccess(self):
         if self.state == '1':
-            return 'list-group-item-warning '
-        elif self.state == '2':
             return 'list-group-item-success '
-        elif self.state == '3':
+        elif self.state == '2':
             return 'list-group-item-info '
         else: 
             return 'list-group-item-primary'

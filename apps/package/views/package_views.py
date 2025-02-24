@@ -103,12 +103,14 @@ def package_create(request):
     context={
         'form':form,
         'customers':Customer.objects.all(),
-        
         }
     if request.method == "POST":
         form = PackageForm(request.POST,request.FILES)
-        if form.is_valid():
+        if form.is_valid():                
             package = form.save()
+            if request.POST['payment_confirm']:
+                package.payment_state='2'
+                package.save()
             if request.FILES.getlist('images'):
                 for image_file in request.FILES.getlist('images'):
                     ImagePackage.objects.create(
@@ -241,7 +243,11 @@ def package_delete(request,pk):
 @staff_member_required(login_url='/')
 def package_component_table_payment(request,pk):
     package = Package.objects.filter(pk=pk,state='1').first()
-    package.state='2'
-    package.save()
-    context={'package':[]}
+    context  = {
+        'package':package
+    }
+    if package.payment_state == '2' and package.bulk > 0:
+        package.state='2'
+        package.save()
+        context['package']=[]
     return render(request,'packages/package_table_component.html',context) 

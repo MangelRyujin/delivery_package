@@ -4,7 +4,8 @@
     <td class="border small table-min text-ellipsis-username">{{package.customer.full_name}}</td>
     <td class="border small table-min text-ellipsis-username">{{package.addressee.full_name}}</td>
     <td class="border small table-min d-flex justify-content-around">{{package.get_state_display}}
-      <button  class="btn-sm btn d-flex justify-content-center align-items-center     {% if package.payment_state == '1' %} disabled {% else %} border-2 border-success btn-outline-success{% endif %}"
+      
+      <button  class="btn-sm btn d-flex justify-content-center align-items-center     {% if not package.is_completed %} disabled {% else %} border-2 border-success btn-outline-success{% endif %}"
         
           hx-get="{% url 'package_component_table_payment' pk=package.pk %}"
           hx-target="#TablePackage{{package.pk}}"

@@ -32,7 +32,7 @@
                         data-subtext="{{package.get_payment_state_display}}"
                          value="{{package.pk}}" {% if form.package.value == package.pk %}selected{% endif %}
                       >
-                      Código - {{package.pk}}
+                      Paquete-{{package.pk}}-cliente-{{package.customer.pk}}
                         </option>
                       {% endfor %}
                     </select>
@@ -75,32 +75,9 @@
                 {% endfor %}
               </div>
             {% endif %}
+            <span class="text-info small">Fecha estimada de llegada</span>
           </div>
-          <div class="col-12  mt-4">  
-            <label for="{{ form.state.id_for_label }}Create" class="form-label">Estado</label>
-            <div class="input-group d-flex justify-content-center align-items-center">
-              
-              <select class="form-control w-100" 
-                    id='{{ form.state.id_for_label }}Create'
-                    required
-                    name="state"
-                    >
-             
-                      <option value="1" selected >Gestionando</option>
-                      <option value="2"  >Completado</option>
-                  </select>
-                  
-                  
-            </div>
-            {% if form.state.errors %}
-            <div class="alert alert-danger mt-2">
-            {% for error in form.state.errors %}
-                {{ error }}
-            {% endfor %}
-          </div>
-            {% endif %}
           
-        </div>
           
           
             

@@ -15,7 +15,7 @@ from django.utils.translation import gettext as _
 @group_required('administrador','gestor')
 @staff_member_required(login_url='/')
 def orders_successfull_views(request):
-    orders = Order.objects.filter(state='4').order_by('-id')
+    orders = Order.objects.filter(state='3').order_by('-id')
     context = {
         'orders':orders,
         }
@@ -33,7 +33,7 @@ def orders_successfull_results_view(request):
 # orders search funtion
 @staff_member_required(login_url='/')
 def _show_orders_successfull(request):
-    return _create_paginator(request,OrderFilter(request.GET, queryset=Order.objects.filter(state='4').order_by('-pk')))
+    return _create_paginator(request,OrderFilter(request.GET, queryset=Order.objects.filter(state='3').order_by('-pk')))
     
    
 
@@ -42,7 +42,7 @@ def _show_orders_successfull(request):
 @group_required('administrador','gestor')
 @staff_member_required(login_url='/')
 def orders_successfull_detail(request,pk):
-    order = Order.objects.filter(pk=pk,state='4').first()
+    order = Order.objects.filter(pk=pk,state='3').first()
     context={'order':order}
     return render(request,'orders_successfull/actions/orderDetail/orderDetail.html',context) 
 

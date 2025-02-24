@@ -11,7 +11,7 @@ from apps.package.models import Order, Package
 @staff_member_required(login_url='/')
 def report_delivery_order_view(request):
     context={
-        'orders': Order.objects.filter(state='4').order_by('-pk') ,
+        'orders': Order.objects.filter(state='3').order_by('-pk') ,
         
     }
     response= render(request,'reports_templates/reports_user_sales/reports.html',context)
@@ -24,7 +24,7 @@ def report_delivery_order_view(request):
 @group_required('administrador','gestor')
 @staff_member_required(login_url='/')
 def delivery_order_table_results(request):
-    orders = DeliveryOrderFilter(request.GET, queryset=Order.objects.filter(state='4').order_by('-pk')).qs
+    orders = DeliveryOrderFilter(request.GET, queryset=Order.objects.filter(state='3').order_by('-pk')).qs
     context={
         'orders': orders,
         'item_total_price': sum(order.total_price for order in orders) or 0,

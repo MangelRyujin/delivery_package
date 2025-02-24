@@ -69,7 +69,7 @@
             });
         </script>
           <div class="col-12 mt-4">
-            <label for="{{ form.cost.id_for_label }}" class="form-label">Costo</label>
+            <label for="{{ form.cost.id_for_label }}" class="form-label">Costo por libra</label>
             <input type="number" min="0.01" step="0.01" class="form-control" required name="cost" id="{{ form.cost.id_for_label }}" placeholder="costo">
             {% if form.cost.errors %}
             <div class="alert alert-danger mt-2">
@@ -81,7 +81,7 @@
           </div>
           <div class="col-12 mt-4">
             <label for="{{ form.tax.id_for_label }}" class="form-label">Impuesto</label>
-            <input type="number" required min="0.01" step="0.01" name="tax" class="form-control" id="{{ form.tax.id_for_label }}" placeholder="impuesto">
+            <input type="number" required min="0" value=0 step="0.01" name="tax" class="form-control" id="{{ form.tax.id_for_label }}" placeholder="impuesto">
             {% if form.tax.errors %}
             <div class="alert alert-danger mt-2">
                 {% for error in form.tax.errors %}
@@ -91,11 +91,23 @@
             {% endif %}
           </div>
           <div class="col-12 mt-4">
-            <label for="{{ form.weight.id_for_label }}" class="form-label">Peso (kg)</label>
+            <label for="{{ form.weight.id_for_label }}" class="form-label">Peso (libra)</label>
             <input type="number" required min="0.01" step="0.01" name="weight" class="form-control" id="{{ form.weight.id_for_label }}" placeholder="peso">
             {% if form.weight.errors %}
             <div class="alert alert-danger mt-2">
                 {% for error in form.weight.errors %}
+                    {{ error }}
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+          <div class="col-12 mt-4">
+            <label for="{{ form.bulk.id_for_label }}" class="form-label">Bultos</label>
+            <input type="number" required min="0" value=0 name="bulk" class="form-control" id="{{ form.bulk.id_for_label }}" placeholder="Bultos">
+            <span class="text-info small">Cantidad de bultos en que esta dividido un paquete</span>
+            {% if form.bulk.errors %}
+            <div class="alert alert-danger mt-2">
+                {% for error in form.bulk.errors %}
                     {{ error }}
                 {% endfor %}
               </div>
@@ -114,23 +126,36 @@
           </div>
           <div class="col-12 mt-4">
             <label for="{{ form.images.id_for_label }}" class="form-label">Imágenes (1 o más)</label>
-            <div class="input-group ">
-              <label class="input-group-text" for="{{form.images.id_for_label}}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class=" bi-image-fill" viewBox="0 0 16 16">
-                  <path d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062zm5-6.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"/>
-                </svg>
-              </label>
-              <input type="file" required name="images" multiple class="form-control" id="{{form.images.id_for_label}}">
-            </div>
-            {% if form.images.errors %}
-            <div class="alert alert-danger mt-2">
-                {% for error in form.images.errors %}
-                    {{ error }}
-                {% endfor %}
+              <div class="input-group ">
+                <label class="input-group-text" for="{{form.images.id_for_label}}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class=" bi-image-fill" viewBox="0 0 16 16">
+                    <path d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062zm5-6.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"/>
+                  </svg>
+                </label>
+                <input type="file" required name="images" multiple class="form-control" id="{{form.images.id_for_label}}">
               </div>
-            {% endif %}
-          </div>
-          
+              {% if form.images.errors %}
+              <div class="alert alert-danger mt-2">
+                  {% for error in form.images.errors %}
+                      {{ error }}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+            <div class="col-12 mt-4">
+              <label for="inputPaymentSelect" class="form-label">Realizar pago</label>
+                <div class="input-group mb-3">
+                  <div class="input-group-text">
+                    <input class="form-check-input input-group-lg mt-0" name="payment_confirm" type="checkbox" value='2' aria-label="Checkbox for following text input">
+                  </div>
+                  <select name="payment_method" class="form-select" id="inputPaymentSelect">
+                    <option value="1" {% if package.payment_method == '1' %}selected{% endif %}>Efectivo</option>
+                    <option value="2" {% if package.payment_method == '2' %}selected{% endif %}>Transferencia</option>
+                    <option value="3" {% if package.payment_method == '3' %}selected{% endif %}>Tarjeta</option>
+                  </select>
+                </div>
+              
+            </div>
           
             
           {% if message %}
@@ -164,7 +189,7 @@
               <span type="button" class="btn-close px-2" data-bs-dismiss="alert" aria-label="Close"></span>
             </div>
           {% endif %}
-          <small class=" w-100 d-flex justify-content-end mt-3">
+          <small class=" w-100 d-flex justify-content-end mt-4">
             <button type="submit" class="btn d-flex justify-content-center align-items-center btn-outline-primary shadow-sm border-2 border-primary px-5">
               <span id="spinnerPackageCreate" class="htmx-indicator spinner-border spinner-border-sm me-2" ></span>Crear</button>
         </small>
