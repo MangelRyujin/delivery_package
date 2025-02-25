@@ -15,3 +15,4 @@ def validate_customer_orders_view(request):
          context['error']="No existe el cliente"
    return render(request,'customer_orders/customer_orders.html',context)
 
+

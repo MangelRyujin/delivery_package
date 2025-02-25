@@ -5,6 +5,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 import logging
 from django.forms import modelformset_factory
 from apps.account.decorators import group_required
+from utils.send_email import send_email_to_customer_delivery_package
 logger = logging.getLogger(__name__)
 from django.db.models import Q
 from django.utils.translation import gettext as _
@@ -89,6 +90,7 @@ def delivery_package_checked(request,pk):
             package.delivery_user_pk = request.user.pk
             package.delivery_user_username = request.user.username
             package.delivery_user_email = request.user.email
+            send_email_to_customer_delivery_package(package.customer)
             package.save()
             context['package']=[]
             return  render(request,'delivery_packages/package_table_component.html',context)

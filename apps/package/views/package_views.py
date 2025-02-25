@@ -105,11 +105,13 @@ def package_create(request):
         'customers':Customer.objects.all(),
         }
     if request.method == "POST":
+        import datetime
         form = PackageForm(request.POST,request.FILES)
         if form.is_valid():                
             package = form.save()
             if request.POST['payment_confirm']:
                 package.payment_state='2'
+                package.payment_datetime = datetime.datetime.now()
                 package.save()
             if request.FILES.getlist('images'):
                 for image_file in request.FILES.getlist('images'):
@@ -195,10 +197,12 @@ def package_payment_update(request,pk):
             package.payment_state = '2'
             package.payment_method = request.POST['payment_method'] or '1'
             package.payment_datetime = datetime.datetime.now()
+            
             context['message']= "Se ha pagado"
         else:
             package.payment_state = '1'
             package.payment_datetime = None
+            
             context['message']= "No se ha pagado"
         package.save()
     context['package']= package
