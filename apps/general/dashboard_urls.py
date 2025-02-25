@@ -16,7 +16,7 @@ urlpatterns = [
     path('reports/', include('apps.package.urls.delivery_order_urls')),
     path('validate_customer/', validate_customer_orders_view, name='validate_customer_orders_view'),
     path('customer_orders/', customer_orders_view, name='customer_orders_view'),
-    
+    path('delivery_packages/',include('apps.package.urls.delivery_package_urls')),
 
 ]
 

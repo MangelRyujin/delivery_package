@@ -22,6 +22,7 @@
         </div>
     
       {% endif %}
+      {% if request.user|has_group:"gestor" %}
       <div class="col">
         <div class="h-100 p-3 bg-body-tertiary border rounded-3">
           <h2>Clientes</h2>
@@ -95,7 +96,23 @@
         </div>
         </div>
       </div>
-      
+      {% endif %}
+      {% if request.user|has_group:"repartidor"%}
+        <div class="col">
+          <div class="h-100 p-3 bg-body-tertiary border rounded-3">
+            <h2>Repartidores</h2>
+            <div class="mb-2 flex justify-content-center w-100">
+            <img src="{% static "img/messenger.svg" %}" height="250" width="100%"/>
+            </div>
+            <p>Compelte la entrega de los pedidos que ha escogido.</p>
+            <div class="d-flex justify-content-end">
+              <a href="{% url "delivery_packages_view" %}" class="btn btn-primary fw-bold" type="button">Ver más</a>
+            </div>
+            
+          </div>
+        </div>
+    
+      {% endif %}
 
   </div>
   

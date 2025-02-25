@@ -13,7 +13,7 @@ def send_email_to_customer(customer):
    
    
 def order_in_proccess_send_customer_email(order):  
-    if order.state == '3':
+    if order.state == '2':
         last_customer_pk = ''
         for package in order.packages.all():
             if last_customer_pk != package.customer.pk:

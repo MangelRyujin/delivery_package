@@ -78,6 +78,9 @@ class Package(models.Model):
     payment_method = models.CharField(max_length=1, choices=PAYMENT_METHOD,default='1')
     payment_datetime= models.DateTimeField(auto_now=False,null=True,blank=True)
     delivery_datetime = models.DateTimeField(auto_now=False,null=True,blank=True)
+    delivery_user_pk =  models.CharField(max_length=20,null=True,blank=True)
+    delivery_user_username =  models.CharField(max_length=255,null=True,blank=True )
+    delivery_user_email =   models.CharField(max_length=255,null=True,blank=True )
     
     class Meta:
         verbose_name = "Paquete"

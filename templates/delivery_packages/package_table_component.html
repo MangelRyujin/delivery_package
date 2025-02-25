@@ -1,0 +1,54 @@
+{% if package %}
+  <tr class="text-center" id="TablePackage{{package.pk}}">
+    <td class="border small ">{{package.orders.all.0.pk}}</td>
+    <td class="border small table-min text-ellipsis-username">{{package.pk}}</td>
+    <td class="border small table-min text-ellipsis-username">{{package.addressee.full_name}}</td>
+    <td class="border small table-min d-flex justify-content-around">
+      {% if not package.is_delivery %}
+        No entregado
+        <button type="button"
+         class="btn-sm btn d-flex justify-content-center align-items-center border-2 border-success btn-outline-success"
+         data-bs-toggle="modal" data-bs-target="#modalPackageChecked"
+        hx-get="{% url 'delivery_package_checked' pk=package.pk  %} "
+        hx-target="#PackageChecked"
+        hx-swap="innerHTML"
+        hx-trigger="click"
+        hx-indicator="#spinnerStatePackageChecked{{package.pk}}"
+      >
+        <span id="spinnerStatePackageChecked{{package.pk}}" class="htmx-indicator spinner-border spinner-border-sm me-2" ></span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class=" bi-check2-all" viewBox="0 0 16 16">
+            <path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0"/>
+            <path d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708"/>
+          </svg>
+      </button>
+      {% endif %}
+      
+      
+      
+    </td>
+    <td class="border small  ">
+       {{package.bulk}}
+   
+    </td>
+ 
+    
+    <td class="table-width-80 px-1 ">
+    <div class="d-flex justify-content-around  align-items-center p-0 m-0 pt-1">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="cursor-pointer bi text-info bi-eye-fill"   
+            viewBox="0 0 16 16" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightPackageDetail" aria-controls="offcanvasRight"
+            hx-get="{% url 'delivery_package_detail' pk=package.pk  %} "
+            hx-target="#PackageDetail"
+            hx-swap="innerHTML"
+            hx-trigger="click"
+            hx-indicator="#spinnerPackageDetail"
+          >
+            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+          </svg>
+         
+    </div>
+    </td>
+  </tr>
+
+{% endif %}
