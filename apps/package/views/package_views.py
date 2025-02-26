@@ -105,11 +105,12 @@ def package_create(request):
         'customers':Customer.objects.all(),
         }
     if request.method == "POST":
-        import datetime
+        import datetime 
         form = PackageForm(request.POST,request.FILES)
+        payment_confirm = request.POST.get('payment_confirm', None)
         if form.is_valid():                
             package = form.save()
-            if request.POST['payment_confirm']:
+            if payment_confirm:
                 package.payment_state='2'
                 package.payment_datetime = datetime.datetime.now()
                 package.save()
