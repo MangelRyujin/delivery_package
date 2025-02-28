@@ -1,3 +1,4 @@
+{% load float_str %} 
 {% if form %}
       <form 
               enctype="multipart/form-data"
@@ -68,7 +69,7 @@
             </script>
               <div class="col-12 mt-4">
                 <label for="{{ form.cost.id_for_label }}Update" class="form-label">Costo por libra</label>
-                <input type="number" min="0.01" step="0.01" value="{{form.cost.value}}" class="form-control" required name="cost" id="{{ form.cost.id_for_label }}Update" placeholder="costo">
+                <input type="number" min="0.01" step="0.01" value="{{form.cost.value|float_str}}" class="form-control" required name="cost" id="{{ form.cost.id_for_label }}Update" placeholder="costo">
                 {% if form.cost.errors %}
                 <div class="alert alert-danger mt-2">
                     {% for error in form.cost.errors %}
@@ -79,7 +80,7 @@
               </div>
               <div class="col-12 mt-4">
                 <label for="{{ form.tax.id_for_label }}Update" class="form-label">Impuesto</label>
-                <input type="number" required min="0" step="0.01" value="{{form.tax.value}}" name="tax" class="form-control" id="{{ form.tax.id_for_label }}Update" placeholder="impuesto">
+                <input type="number" required min="0" step="0.01" value="{{form.tax.value|float_str}}" name="tax" class="form-control" id="{{ form.tax.id_for_label }}Update" placeholder="impuesto">
                 {% if form.tax.errors %}
                 <div class="alert alert-danger mt-2">
                     {% for error in form.tax.errors %}
@@ -89,9 +90,9 @@
                 {% endif %}
               </div>
               <div class="col-12 mt-4">
-                
+               
                 <label for="{{ form.weight.id_for_label }}Update" class="form-label">Peso (libra)</label>
-                <input type="number" required min="0.01" step="0.01" value="{{form.weight.value}}" name="weight" class="form-control" id="{{ form.weight.id_for_label }}Update" placeholder="peso">
+                <input type="number" required min="0.01" step="0.01" value="{{form.weight.value|float_str}}" name="weight" class="form-control" id="{{ form.weight.id_for_label }}Update" placeholder="peso">
                 {% if form.weight.errors %}
                 <div class="alert alert-danger mt-2">
                     {% for error in form.weight.errors %}

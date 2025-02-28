@@ -2,13 +2,19 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.conf import settings
 
+from delivery_package.settings import DOMAIN_URL
+
 def send_email_to_customer(customer):
     if customer.email:
         asunto = f"Hola {customer.email}"
         mensaje = 'Accede a tus envíos y dales seguimiento'
         remitente = settings.EMAIL_HOST_USER
         destinatario = [customer.email]
-        message_html = render_to_string("email/orders__send.html")
+        context= {
+            'customer':customer,
+            'img':f"{DOMAIN_URL}/static/assets/img/malecon_travel.jpg"
+        }
+        message_html = render_to_string("email/orders__send.html",context)
         send_mail(asunto, mensaje, remitente, destinatario,html_message=message_html, fail_silently=False)
    
    

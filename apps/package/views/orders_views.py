@@ -59,6 +59,17 @@ def order_component_table_detail(request,pk):
     context={'order':order}
     return render(request,'orders_proccess/order_table_component.html',context) 
 
+# order detail forms
+@group_required('administrador','gestor')
+@staff_member_required(login_url='/')
+def order_component_table_update_to_finished(request,pk):
+    order = Order.objects.filter(pk=pk,state__in=['1','2']).first()
+    context={'order':order}
+    if order:
+        order.state='3'
+        order.save()
+        context['order']=[]
+    return render(request,'orders_proccess/order_table_component.html',context) 
 
 
 # Delete order result table

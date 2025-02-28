@@ -72,7 +72,13 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+                'user_tags': 'apps.account.templatetags.user_tags',
+                'float_str': 'apps.account.templatetags.custom_tags'
+            },
+            
         },
+        
     },
 ]
 

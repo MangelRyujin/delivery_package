@@ -3,6 +3,14 @@
   scrollbar-color: rgb(126, 126, 130) transparent;
 }
 
+.text-logo-one{
+  color: rgb(24, 40, 184);
+}
+
+.text-logo-two{
+  color: #d59618;
+}
+
 .bi {
   display: inline-block;
   width: 1rem;

@@ -114,7 +114,7 @@ class ImagePackage(models.Model):
 
 class Order(models.Model):
     STATE=(
-        ('1','completado'),
+        ('1','gestionando'),
         ('2','en camino'),
         ('3','entregado'),
     )
