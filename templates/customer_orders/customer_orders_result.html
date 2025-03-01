@@ -24,7 +24,7 @@
                 <tr class="text-center" >
                   <td class="border small ">{{package.pk}}</td>
                   <td class="border small">
-                    <span class=" span-1 rounded-4 badge small p-2 {% if package.is_delivery %}text-bg-success{% else %}text-bg-danger{% endif %} ">{% if package.is_delivery %}En camino{% else %}entregado{% endif %}</span>
+                    <span class=" span-1 rounded-4 badge small p-2 {% if package.is_delivery %}text-bg-success{% else %}text-bg-danger{% endif %} ">{% if not package.is_delivery %}en camino{% else %}entregado{% endif %}</span>
                   </td>
                   <td class="border small table-min text-ellipsis-username">{{package.addressee.full_name}}</td>
 
