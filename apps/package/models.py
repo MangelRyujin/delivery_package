@@ -58,6 +58,11 @@ class Package(models.Model):
         ('3','entregado')
         
     )
+    TYPE=(
+        ('1','marítimo'),
+        ('2','aéreo'),
+        ('3','aéreo express')
+    )
     PAYMENT_METHOD=(
         ('1','efectivo'),
         ('2','transferencia'),
@@ -74,6 +79,7 @@ class Package(models.Model):
     state = models.CharField(max_length=1, choices=STATE,default='1')
     created_at= models.DateTimeField(auto_now=True)
     is_delivery = models.BooleanField(default=False)
+    type = models.CharField(max_length=1, choices=TYPE,default='1')
     payment_state = models.CharField(max_length=1, choices=PAYMENT_STATE,default='1')
     payment_method = models.CharField(max_length=1, choices=PAYMENT_METHOD,default='1')
     payment_datetime= models.DateTimeField(auto_now=False,null=True,blank=True)

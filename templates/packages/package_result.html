@@ -24,7 +24,7 @@
     {% endif %}
 
   
-{% if packages %}
+{% if pagination %}
 
 <div class="table-responsive table-bordered mt-0" >
   <table class="table table-hover">
@@ -33,19 +33,89 @@
         <th  scope="col">Código</th>
         <th scope="col">Cliente</th>
         <th scope="col">Destinatario</th>
+        <th scope="col">Tipo</th>
         <th scope="col">Estado</th>
-        <th scope="col">Pago</th>
+        <th scope="col">Entregado</th>
         <th scope="col">Total a pagar</th>
         <th scope="col">Acciones</th>
       </tr>
     </thead>
     <tbody>
-    {% for package in packages %}
+    {% for package in pagination %}
         {% include "packages/package_table_component.html" %}
     {% endfor %}
       </tbody>
     </table>
   </div>
+  {% if pagination.has_next or pagination.has_previous%}
+    <nav aria-label="Page navigation example ">
+      <ul class="pagination justify-content-center justify-content-md-end mt-2">
+        {% if pagination.has_previous %}
+        <li class="page-item">
+          <a
+            class="page-link cursor-pointer"
+            hx-get="{% url 'packages_results_view' %}?page=1&{{ parameters }}"
+            hx-target="#PackageResults"
+            hx-indicator="#spinner"
+          >
+            Inicio
+          </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <a class="page-link cursor-pointer">Inicio</a>
+        </li>
+
+        {% endif %} {% for page_number in pagination.paginator.page_range %} 
+        {%if pagination.number|add:'-2' <= page_number and pagination.number|add:"2" >= page_number%} {%if pagination.number == pagination.paginator.num_pages %}
+        <li
+          class="page-item {% if page_number == pagination.number %}active{% endif %}"
+        >
+          
+          <a
+            class="page-link cursor-pointer"
+            hx-get="{% url 'packages_results_view' %}?page={{ page_number }}&{{ parameters }}"
+            hx-target="#PackageResults"
+            hx-indicator="#spinner"
+          >
+            {{ page_number }}
+          </a>
+        </li>
+        {% else %}
+        <li
+          class="page-item {% if page_number == pagination.number %}active{% endif %}"
+        >
+          <a
+            class="page-link cursor-pointer"
+            hx-get="{% url 'packages_results_view' %}?page={{ page_number }}&{{ parameters }}"
+            hx-target="#PackageResults"
+            hx-indicator="#spinner"
+          >
+            {{ page_number }}
+          </a>
+          
+        </li>
+        {% endif %} {% endif %} {% endfor %} {% if pagination.has_next %}
+        <li class="page-item">
+          <a
+            class="page-link cursor-pointer"
+            hx-get="{% url 'packages_results_view' %}?page={{ pagination.paginator.num_pages }}&{{ parameters }}"
+            hx-target="#PackageResults"
+            hx-indicator="#spinner"
+          >
+            Fin
+          </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <a class="page-link cursor-pointer">Fin</a>
+        </li>
+
+        {% endif %}
+      </ul>
+    </nav>
+    {% endif %}
+
 
 
 

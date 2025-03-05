@@ -31,19 +31,19 @@
                         </option>
                         {% for select_package in select_packages %}
                           <option 
-                            data-subtext="{{select_package.get_payment_state_display}}"
+                            data-subtext="{{select_package.customer.full_name}}"
                             value="{{select_package.pk}}" selected
                           >
-                          Código - {{select_package.pk}}
+                          Paquete-{{select_package.pk}}
                             </option>
                         {% endfor %}
                         {% for package in packages %}
-                        
+                        get_payment_state_display
                           <option 
-                          data-subtext="{{package.get_payment_state_display}}"
+                          data-subtext="{{package.customer.full_name}}"
                            value="{{package.pk}}" {% if form.package.value == package.pk %}selected{% endif %}
                         >
-                        Código - {{package.pk}}
+                        Paquete-{{package.pk}}
                           </option>
                         {% endfor %}
                       </select>
@@ -76,18 +76,7 @@
                 </div>
               {% endif %}
             </div>
-            <div class="col-12 mt-4">
-              <label for="{{ form.delivery_date.id_for_label }}" class="form-label">Fecha de entrega</label>
-              <input type="date" class="form-control" required value="{{order.delivery_date|date:'Y-m-d'}}" name="delivery_date" id="{{ form.delivery_date.id_for_label }}">
-              {% if form.delivery_date.errors %}
-              <div class="alert alert-danger mt-2">
-                  {% for error in form.delivery_date.errors %}
-                      {{ error }}
-                  {% endfor %}
-                </div>
-              {% endif %}
-              <span class="text-info small">Fecha estimada de llegada</span>
-            </div>
+            
             <div class="col-12  mt-4">  
               <label for="{{ form.state.id_for_label }}Create" class="form-label">Estado</label>
               <div class="input-group d-flex justify-content-center align-items-center">

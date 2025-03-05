@@ -67,6 +67,17 @@
                   $('.selectpicker').selectpicker();
                 });
             </script>
+            <div class="col-12 mt-4">
+              <label for="inputTypeSelectUpdate" class="form-label">Tipo</label>
+                <div class="input-group mb-3">
+                  <select name="type" class="form-select" id="inputTypeSelectUpdate">
+                    <option value="1" {% if package.type == '1' %}selected{% endif %}>Marítimo</option>
+                    <option value="2" {% if package.type == '2' %}selected{% endif %}>Aéreo</option>
+                    <option value="3" {% if package.type == '3' %}selected{% endif %}>Aéreo express</option>
+                  </select>
+                </div>
+              
+            </div>
               <div class="col-12 mt-4">
                 <label for="{{ form.cost.id_for_label }}Update" class="form-label">Costo por libra</label>
                 <input type="number" min="0.01" step="0.01" value="{{form.cost.value|float_str}}" class="form-control" required name="cost" id="{{ form.cost.id_for_label }}Update" placeholder="costo">

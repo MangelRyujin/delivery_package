@@ -11,6 +11,7 @@ from utils.send_email import order_in_proccess_send_customer_email, send_email_t
 logger = logging.getLogger(__name__)
 from django.db.models import Q
 from django.utils.translation import gettext as _
+from datetime import date
   
 # orders index 
 @group_required('administrador','gestor')
@@ -66,9 +67,15 @@ def order_component_table_update_to_finished(request,pk):
     order = Order.objects.filter(pk=pk,state__in=['1','2']).first()
     context={'order':order}
     if order:
-        order.state='3'
+        if order.state=='1':
+            order.state='2'
+        else:
+            order.state='3'
+            order.delivery_date = date.today()
         order.save()
-        context['order']=[]
+        if order.state == '3':
+            order = []
+        context['order']=order
     return render(request,'orders_proccess/order_table_component.html',context) 
 
 
@@ -121,9 +128,11 @@ def order_update(request,pk):
         form =   UpdateOrderForm(request.POST,instance=order)
         if form.is_valid():
             form.save()
+            if order.state == '3':
+                order.delivery_date = date.today()
+                order.save()
             order_in_proccess_send_customer_email(order)      
             context['form']=form
             context['message']="Editado correctamente"
-        else:
-            print(form.errors)          
+        
     return render(request,'orders_proccess/actions/orderUpdate/orderUpdateForm.html',context) 

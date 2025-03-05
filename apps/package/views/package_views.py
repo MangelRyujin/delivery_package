@@ -1,3 +1,4 @@
+from apps.package.filters import PackageFilter
 from apps.package.forms.package_forms import CreateImagePackageForm, PackageForm, UpdatePackageForm
 from apps.package.models import ImagePackage, Package,Customer,Addressee
 from django.shortcuts import render,get_object_or_404
@@ -5,22 +6,18 @@ from django.contrib.admin.views.decorators import staff_member_required
 import logging
 from django.forms import modelformset_factory
 from apps.account.decorators import group_required
+from utils.paginator import _create_paginator
 logger = logging.getLogger(__name__)
 from django.db.models import Q
 from django.utils.translation import gettext as _
-from django.db import transaction, IntegrityError
   
 # packages index 
 @group_required('administrador','gestor')
 @staff_member_required(login_url='/')
 def packages_view(request):
-    packages = Package.objects.filter(state='1').order_by('-id')
-    context = {
-        'packages':packages,
-        'form': PackageForm(),
-        'customers':Customer.objects.all(),
-        
-        }
+    context=_show_packages(request)
+    context['form']  = PackageForm()
+    context['customers']  = Customer.objects.all()
     response= render(request,'packages/package.html',context)
     response['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
     response['Pragma'] = 'no-cache'
@@ -31,35 +28,18 @@ def packages_view(request):
 @staff_member_required(login_url='/')
 def packages_results_view(request):
     return  render(request,'packages/package_result.html',context=_show_packages(request))
-       
-# packages search funtion
+ 
+ # orders search funtion
 @staff_member_required(login_url='/')
 def _show_packages(request):
-    keyword = request.session.get('keyword', '')
+    return _create_paginator(request,PackageFilter(request.GET, queryset=Package.objects.all().order_by('state','-pk')))
     
-    if request.method == 'POST':
-        keyword = request.POST.get("keyword",'')
-        request.session['keyword'] = keyword
-
-    packages = Package.objects.filter(
-        Q(pk__icontains=keyword) | Q(customer__email__icontains=keyword) |
-        Q(customer__full_name__icontains=keyword) | Q(customer__phone_number__icontains=keyword) |
-        Q(addressee__full_name__icontains=keyword) | Q(addressee__province__icontains=keyword)|
-        Q(addressee__municipe__icontains=keyword) | Q(addressee__address__icontains=keyword)|
-        Q(addressee__phone_number__icontains=keyword) ,state='1'
-        ).distinct().order_by('-id')
-    context={
-        'packages':packages,
-        
-    }
-    return context
-
 
 # package detail forms
 @group_required('administrador','gestor')
 @staff_member_required(login_url='/')
 def package_component_table_detail(request,pk):
-    package = Package.objects.filter(pk=pk,state='1').first()
+    package = Package.objects.filter(pk=pk).first()
     context={'package':package}
     return render(request,'packages/package_table_component.html',context) 
 
@@ -68,7 +48,7 @@ def package_component_table_detail(request,pk):
 @group_required('administrador','gestor')
 @staff_member_required(login_url='/')
 def package_detail(request,pk):
-    package = Package.objects.filter(pk=pk,state='1').first()
+    package = Package.objects.filter(pk=pk).first()
     context={'package':package}
     return render(request,'packages/actions/packageDetail/packageDetail.html',context) 
 
@@ -247,12 +227,27 @@ def package_delete(request,pk):
 @group_required('administrador','gestor')
 @staff_member_required(login_url='/')
 def package_component_table_payment(request,pk):
-    package = Package.objects.filter(pk=pk,state='1').first()
+    package = Package.objects.filter(pk=pk).first()
     context  = {
         'package':package
     }
     if package.payment_state == '2' and package.bulk > 0:
         package.state='2'
         package.save()
-        context['package']=[]
+        
+    return render(request,'packages/package_table_component.html',context) 
+
+# package detail forms
+@group_required('administrador','gestor')
+@staff_member_required(login_url='/')
+def package_component_table_delivery(request,pk):
+    package = Package.objects.filter(pk=pk).first()
+    context  = {
+        'package':package
+    }
+    if package.state == '2':
+        package.state='3'
+        package.is_delivery = True
+        package.save()
+        
     return render(request,'packages/package_table_component.html',context) 

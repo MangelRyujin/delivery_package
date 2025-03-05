@@ -34,7 +34,7 @@
             <th  scope="col">Código de envio</th>
             <th  scope="col">Email</th>
             <th  scope="col">Nombres y apellidos</th>
-          
+            <th  scope="col">Destinatarios</th>
             <th  scope="col">Móvil</th>
             <th scope="col">Acciones</th>
           </tr>
@@ -48,7 +48,24 @@
                 <td class="border small pt-2 table-min text-ellipsis-username">{{customer.full_name}}</td>
                  
                 <td class="border small pt-2 table-min ">{% if customer.phone_number %}{{customer.phone_number}}{% else %}-{% endif %}</td>         
-                
+                <td class="border small table-min ">
+                 
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="border-2 rounded-1 border border-primary-subtle text-primary cursor-pointer bi-plus" viewBox="0 0 16 16"
+                              tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-title="Destinatarios" 
+                              data-bs-content="{% for addressee in customer.custommer_addressee.all %}{{ addressee.full_name }}{% if not forloop.last %}, {% endif %} {% endfor %}">
+                              <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                            </svg>
+                                      
+                            <script>
+                      
+                              if (!window.popoverTriggerList) {
+                                const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+                                const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+                              }
+                              
+                            </script>
+                               
+                </td>
                         
                 <td class="table-width-80 px-1 ">
                 <div class="d-flex justify-content-around  align-items-center p-0 m-0 pt-1">

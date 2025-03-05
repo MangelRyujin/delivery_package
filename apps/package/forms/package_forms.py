@@ -8,14 +8,14 @@ class PackageForm(forms.ModelForm):
     images = forms.ImageField(widget=forms.ClearableFileInput(attrs={'multiple': True}),required=False,)
     class Meta:
         model = Package
-        fields = ['customer','addressee','cost','weight','bulk','tax','message','images','payment_method']
+        fields = ['customer','addressee','cost','weight','bulk','tax','message','type','images','payment_method']
 
 
 class UpdatePackageForm(forms.ModelForm):
     
     class Meta:
         model = Package
-        fields = ['customer','addressee','cost','weight','bulk','tax','message']
+        fields = ['customer','addressee','cost','weight','bulk','tax','type','message']
  
         
 class CreateImagePackageForm(forms.ModelForm):

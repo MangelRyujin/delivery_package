@@ -1,5 +1,5 @@
 import django_filters
-from apps.package.models import Addressee, Customer, Order
+from apps.package.models import Addressee, Customer, Order, Package
   
 
 class CustomerFilter(django_filters.FilterSet):
@@ -31,11 +31,23 @@ class AddresseeFilter(django_filters.FilterSet):
         fields = ['pk','full_name','customer_email','phone_number','address','province','municipe']
         
 
+class PackageFilter(django_filters.FilterSet):
+    pk = django_filters.CharFilter(lookup_expr='icontains')
+    state=  django_filters.CharFilter(lookup_expr='exact')
+    type=  django_filters.CharFilter(lookup_expr='exact')
+    is_delivery = django_filters.BooleanFilter(lookup_expr='exact')
+    customer = django_filters.CharFilter(field_name='customer__full_name', lookup_expr='icontains')
+    addressee = django_filters.CharFilter(field_name='addressee__full_name', lookup_expr='icontains')
+    
+    class Meta:
+        model = Package
+        fields = ['pk','state','type','is_delivery','customer','addressee']
+
 
 class OrderFilter(django_filters.FilterSet):
     pk = django_filters.CharFilter(lookup_expr='icontains')
     state=  django_filters.CharFilter(lookup_expr='exact')
-    sent_date = django_filters.DateFilter()
+    sent_date = django_filters.DateFromToRangeFilter()
 
     
     class Meta:

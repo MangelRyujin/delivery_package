@@ -13,7 +13,6 @@ urlpatterns = [
     path('order_in_proccess/',include('apps.package.urls.order_proccess_urls')),
     path('orders_successfull/',include('apps.package.urls.order_successfull_urls')),
     path('perfil/', change_information, name='change_information'),
-    path('reports/', include('apps.package.urls.delivery_order_urls')),
     path('validate_customer/', validate_customer_orders_view, name='validate_customer_orders_view'),
     path('customer_orders/', customer_orders_view, name='customer_orders_view'),
     path('delivery_packages/',include('apps.package.urls.delivery_package_urls')),

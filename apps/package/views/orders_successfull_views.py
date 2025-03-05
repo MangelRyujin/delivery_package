@@ -15,10 +15,7 @@ from django.utils.translation import gettext as _
 @group_required('administrador','gestor')
 @staff_member_required(login_url='/')
 def orders_successfull_views(request):
-    orders = Order.objects.filter(state='3').order_by('-id')
-    context = {
-        'orders':orders,
-        }
+    context={}
     response= render(request,'orders_successfull/order.html',context)
     response['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
     response['Pragma'] = 'no-cache'
@@ -28,12 +25,16 @@ def orders_successfull_views(request):
 # orders search result
 @staff_member_required(login_url='/')
 def orders_successfull_results_view(request):
-    return  render(request,'orders_successfull/order_result.html',context=_show_orders_successfull(request))
+    orders,context=_show_orders_successfull(request)
+    context['item_total_count']=sum(order.total_packages for order in orders)
+    context['item_total_price']=sum(order.total_price for order in orders)
+    return  render(request,'orders_successfull/order_result.html',context)
        
 # orders search funtion
 @staff_member_required(login_url='/')
 def _show_orders_successfull(request):
-    return _create_paginator(request,OrderFilter(request.GET, queryset=Order.objects.filter(state='3').order_by('-pk')))
+    orders = OrderFilter(request.GET, queryset=Order.objects.filter(state='3').order_by('-pk'))
+    return orders.qs ,_create_paginator(request,orders)
     
    
 

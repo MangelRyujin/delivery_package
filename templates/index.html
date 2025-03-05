@@ -84,18 +84,7 @@
         </div>
       </div>
       
-      <div class="col">
-        <div class="h-100 p-3 bg-body-tertiary border rounded-3">
-          <h2>Reportes</h2>
-          <div class="mb-2 flex justify-content-center w-100">
-          <img src="{% static "img/reports.svg" %}" height="250" width="100%"/>
-          </div>
-          <p>Reportes de las entregas realizadas.</p>
-          <div class="d-flex justify-content-end">
-            <a href="{% url "report_delivery_order_view" %}" class="btn btn-primary fw-bold" type="button">Ver más</a>
-        </div>
-        </div>
-      </div>
+      
       {% endif %}
       {% if request.user|has_group:"repartidor"%}
         <div class="col">

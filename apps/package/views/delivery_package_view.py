@@ -85,6 +85,7 @@ def delivery_package_checked(request,pk):
     if request.method == "POST":
         if package:
             import datetime
+            package.state = '3'
             package.is_delivery = True
             package.delivery_datetime = datetime.datetime.now()
             package.delivery_user_pk = request.user.pk

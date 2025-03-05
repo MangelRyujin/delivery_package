@@ -3,11 +3,16 @@
     <td class="border small ">{{package.pk}}</td>
     <td class="border small table-min text-ellipsis-username">{{package.customer.full_name}}</td>
     <td class="border small table-min text-ellipsis-username">{{package.addressee.full_name}}</td>
-    <td class="border small table-min d-flex justify-content-around">{{package.get_state_display}}
+    <td class="border small table-min ">{{package.get_type_display}}</td>
+    <td class="border small table-min {% if not package.state == '3' %} d-flex justify-content-around{% endif %}">{{package.get_state_display}}
       
+      {% if not package.state == '3' %}
       <button  class="btn-sm btn d-flex justify-content-center align-items-center     {% if not package.is_completed %} disabled {% else %} border-2 border-success btn-outline-success{% endif %}"
-        
+          {% if package.state == '2' %}
+          hx-get="{% url 'package_component_table_delivery' pk=package.pk %}"
+          {% else %}
           hx-get="{% url 'package_component_table_payment' pk=package.pk %}"
+          {% endif %}
           hx-target="#TablePackage{{package.pk}}"
           hx-swap="outerHTML"
           hx-trigger="click"
@@ -19,13 +24,24 @@
             <path d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708"/>
           </svg>
       </button>
+      {% endif %}
     </td>
     <td class="border small  ">
-      <span class=" span-1 rounded-4 list-group-item small p-1 {% if package.payment_state == '1' %}  list-group-item-warning {% else %} list-group-item-success {% endif %}">
-      {{package.get_payment_state_display}}
-      </span>
+      {% if package.is_delivery %}
+                          <svg class="color-create" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class=" bi-check-circle-fill" viewBox="0 0 16 16">
+                              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                          </svg>
+                      {% else %}
+                          <svg class="color-delete" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class=" bi-x-circle-fill" viewBox="0 0 16 16">
+                              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                          </svg>
+                      {% endif %}
     </td>
-    <td class="border small table-min ">$ {{package.total_price}}</td>
+    <td class="border small table-min d-flex justify-content-center gap-2">$ {{package.total_price}}
+      <span class=" span-1 rounded-4 list-group-item small p-1 {% if package.payment_state == '1' %}  list-group-item-warning {% else %} list-group-item-success {% endif %}">
+        {{package.get_payment_state_display}}
+        </span>
+    </td>
     
     
     
@@ -53,7 +69,9 @@
             hx-indicator="#spinnerPackageUpdate">
             <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
           </svg>
-          
+          {% if not package.is_delivery %}
+                         
+                     
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="cursor-pointer bi text-danger bi-trash3-fill"  
               viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#modalPackageDelete"
               hx-get="{% url 'package_delete' pk=package.pk  %} "
@@ -62,7 +80,7 @@
               hx-trigger="click">
             <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
           </svg>
-        
+          {% endif %}
         
     </div>
     </td>

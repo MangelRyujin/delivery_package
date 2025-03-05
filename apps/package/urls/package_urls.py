@@ -20,6 +20,7 @@ urlpatterns = [
     path('package_payment_update/<int:pk>/',package_payment_update,name='package_payment_update'),
     path('package_component_table_detail/<int:pk>/',package_component_table_detail,name='package_component_table_detail'),
     path('package_component_table_payment/<int:pk>/',package_component_table_payment,name='package_component_table_payment'),
+    path('package_component_table_delivery/<int:pk>/',package_component_table_delivery,name='package_component_table_delivery'),
 
 ]
 
