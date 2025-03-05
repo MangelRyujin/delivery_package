@@ -92,7 +92,12 @@ def delivery_package_checked(request,pk):
             package.delivery_user_username = request.user.username
             package.delivery_user_email = request.user.email
             send_email_to_customer_delivery_package(package.customer)
-            package.save()
+            package.save() 
+            order = package.orders.first()
+            if not order.packages.filter(is_delivery=False).exists():
+                order.state = '3'
+                order.delivery_date = datetime.date.today()
+                order.save()
             context['package']=[]
             return  render(request,'delivery_packages/package_table_component.html',context)
     return  render(request,'delivery_packages/actions/packageChecked/packageCheckedVerify.html',context)

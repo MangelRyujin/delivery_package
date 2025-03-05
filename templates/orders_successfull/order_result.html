@@ -10,6 +10,7 @@
       
       <tr class="text-center">
         <th  scope="col">Código</th>
+        <th  scope="col">Tipo</th>
         <th scope="col">Fecha</th>
         <th scope="col">Estado</th>
         <th scope="col">Precio total</th>
@@ -22,12 +23,14 @@
         {% include "orders_successfull/order_table_component.html" %}
     {% endfor %}
     <tr class="text-center table-primary">
-      <td class="border small table-min">Total</td>  
+      <td class="border small">Total</td>  
       <td class="border small ">-</td>  
       <td class="border small table-min">-</td>  
+      <td class="border small">-</td> 
       <td class="border small">$ {{item_total_price|floatformat:2}}</td>   
       <td class="border small ">{{item_total_count}}</td>  
       <td class="border small">-</td>  
+      
     </tr>
       </tbody>
     </table>

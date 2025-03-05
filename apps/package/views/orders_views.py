@@ -69,6 +69,7 @@ def order_component_table_update_to_finished(request,pk):
     if order:
         if order.state=='1':
             order.state='2'
+            order_in_proccess_send_customer_email(order)    
         else:
             order.state='3'
             order.delivery_date = date.today()
@@ -109,9 +110,18 @@ def order_create(request):
         if form.is_valid():
             form.save()
             context['message']='Envío creado correctamente'
-    context['packages']=Package.objects.filter(state='2').exclude(orders__isnull=False).order_by('pk')
+    context['packages']=Package.objects.filter(state='2',type='1').exclude(orders__isnull=False).order_by('pk')
     return  render(request,'orders_proccess/actions/orderCreate/orderCreateForm.html',context)
 
+# order get package
+
+@group_required('administrador','gestor')
+@staff_member_required(login_url='/')
+def order_get_package(request):
+    type =request.GET.get('type',None) 
+    packages = Package.objects.filter(state='2',type=type).exclude(orders__isnull=False).order_by('-pk') if type  else []
+    context={'packages':packages}
+    return render(request,'orders_proccess/actions/orderCreate/select_package.html',context) 
 
 # order update forms
 @group_required('administrador','gestor')
@@ -121,7 +131,7 @@ def order_update(request,pk):
     context={
         'form':UpdateOrderForm(instance=order),
         'order':order,
-        'packages': Package.objects.filter(state='2').exclude(orders__isnull=False).order_by('pk'),
+        'packages': Package.objects.filter(state='2',type=order.type).exclude(orders__isnull=False).order_by('pk'),
         'select_packages': Package.objects.filter(state='2').filter(orders=order).order_by('pk')
         }
     if request.method == 'POST':

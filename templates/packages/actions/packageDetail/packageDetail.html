@@ -42,6 +42,9 @@
         <td><span><strong>Código :</strong> {{package.pk}}</span></td> 
       </tr>
       <tr>
+        <td><span><strong>Tipo :</strong> {{package.get_type_display}}</span></td> 
+      </tr>
+      <tr>
         <td><span><strong>Fecha de creación :</strong> {{package.created_at}}</span></td> 
       </tr>
       
@@ -58,16 +61,16 @@
         <td><span><strong>Destinatario :</strong> {{package.addressee.full_name}}</span></td> 
       </tr>
       <tr>
-        <td><span><strong>Costo :</strong> {{package.cost}}</span></td> 
+        <td><span><strong>Costo :</strong> $ {{package.cost}}</span></td> 
       </tr>
       <tr>
-        <td><span><strong>Impuesto :</strong> {{package.tax}}</span></td> 
+        <td><span><strong>Impuesto :</strong> $ {{package.tax}}</span></td> 
       </tr>
       <tr>
         <td><span><strong>Peso :</strong> {{package.weight}} libras</span></td> 
       </tr>
       <tr>
-        <td><span><strong>Total a pagar :</strong> {{package.total_price}}</span></td> 
+        <td><span><strong>Total a pagar :</strong> $ {{package.total_price}}</span></td> 
       </tr>
       <tr>
         <td><span><strong>Bultos :</strong> {{package.bulk}}</span></td> 

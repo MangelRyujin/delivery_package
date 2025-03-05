@@ -3,13 +3,14 @@
 {% if order %}
   <tr class="text-center" id="TableOrder{{order.pk}}">
     <td class="border small ">{{order.pk}}</td>
+    <td class="border small table-min">{{order.get_type_display}}</td>
     <td class="border small table-min">{{order.sent_date}}</td>
     <td class="border small table-min d-flex justify-content-center gap-2">
       <span class=" span-1 rounded-4 list-group-item small p-1 {{order.bg_proccess}}">
         {{order.get_state_display}}
         
         </span>
-        <button  class="btn-sm btn d-flex justify-content-center align-items-center      border-2 border-success btn-outline-success "
+        <button  class="btn-sm btn d-flex justify-content-center align-items-center     border-2 border-success btn-outline-success "
         
           hx-get="{% url 'order_component_table_update_to_finished' pk=order.pk %}"
           hx-target="#TableOrder{{order.pk}}"

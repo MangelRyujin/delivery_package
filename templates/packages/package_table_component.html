@@ -6,7 +6,7 @@
     <td class="border small table-min ">{{package.get_type_display}}</td>
     <td class="border small table-min {% if not package.state == '3' %} d-flex justify-content-around{% endif %}">{{package.get_state_display}}
       
-      {% if not package.state == '3' %}
+      {% if not package.state == '3'  %}
       <button  class="btn-sm btn d-flex justify-content-center align-items-center     {% if not package.is_completed %} disabled {% else %} border-2 border-success btn-outline-success{% endif %}"
           {% if package.state == '2' %}
           hx-get="{% url 'package_component_table_delivery' pk=package.pk %}"

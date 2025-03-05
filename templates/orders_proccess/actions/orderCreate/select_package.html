@@ -1,0 +1,30 @@
+<select class="form-control selectpicker w-100"
+                      multiple 
+                      data-show-subtext="true" 
+                      data-live-search="true"
+                      required
+                      name="packages"
+                      id="{{ form.packages.id_for_label }}Create"
+                      >
+                      <option 
+                      data-subtext="{{package.get_payment_state_display}}"
+                       value=""  disabled
+                      >
+                      Seleccionar paquetes
+                      </option>
+                      {% for package in packages %}
+                      
+                        <option 
+                        data-subtext="{{package.customer.full_name}}"
+                         value="{{package.pk}}" {% if form.package.value == package.pk %}selected{% endif %}
+                      >
+                      Paquete-{{package.pk}}
+                        </option>
+                      {% endfor %}
+                    </select>
+                    <span id="spinnerSelectPackageCreateComponent" class="htmx-indicator small " >Cargando paquetes...</span>
+                    <script>
+                        $(document).ready(function() {
+                            $('.selectpicker').selectpicker();
+                          });
+                      </script>

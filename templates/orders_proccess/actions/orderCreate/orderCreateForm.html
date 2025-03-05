@@ -8,35 +8,29 @@
           hx-trigger="submit"
           hx-indicator="#spinnerOrderCreate">
           {% csrf_token %}
-            <div class="col-12  ">  
+          <div class="col-12 ">
+            <label for="inputTypeSelect" class="form-label">Tipo</label>
+              <div class="input-group mb-3">
+                <select name="type" class="form-select" id="inputTypeSelect"
+                      hx-get="{% url 'order_get_package'  %}"
+                      hx-target="#SelectOrderPackagesCreat"
+                      hx-swap="innerHTML"
+                      hx-trigger="change"
+                      hx-indicator="#spinnerSelectPackageCreateComponent"
+                      >
+                  <option value="1" selected>Marítimo</option>
+                  <option value="2" >Aéreo</option>
+                  <option value="3" >Aéreo express</option>
+                </select>
+              </div>
+            
+          </div>
+      
+            <div class="col-12 mt-4 ">  
               <label for="{{ form.packages.id_for_label }}Create" class="form-label">Paquetes</label>
-              <div class="input-group d-flex justify-content-center align-items-center">
+              <div class="input-group d-flex justify-content-center align-items-center" id="SelectOrderPackagesCreat">
+                {% include "orders_proccess/actions/orderCreate/select_package.html" %}
                 
-                <select class="form-control selectpicker w-100"
-                      multiple 
-                      data-show-subtext="true" 
-                      data-live-search="true"
-                      required
-                      name="packages"
-                      id="{{ form.packages.id_for_label }}Create"
-                      >
-                      <option 
-                      data-subtext="{{package.get_payment_state_display}}"
-                       value=""  disabled
-                      >
-                      Seleccionar paquetes
-                      </option>
-                      {% for package in packages %}
-                      
-                        <option 
-                        data-subtext="{{package.customer.full_name}}"
-                         value="{{package.pk}}" {% if form.package.value == package.pk %}selected{% endif %}
-                      >
-                      Paquete-{{package.pk}}
-                        </option>
-                      {% endfor %}
-                    </select>
-                    
                     
               </div>
               {% if form.package.errors %}
@@ -49,11 +43,7 @@
             
           </div>
           
-        <script>
-          $(document).ready(function() {
-              $('.selectpicker').selectpicker();
-            });
-        </script>
+        
           <div class="col-12 mt-4">
             <label for="{{ form.sent_date.id_for_label }}" class="form-label">Fecha de envío</label>
             <input type="date" class="form-control" required name="sent_date" id="{{ form.sent_date.id_for_label }}">

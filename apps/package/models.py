@@ -124,6 +124,12 @@ class Order(models.Model):
         ('2','en camino'),
         ('3','entregado'),
     )
+    TYPE=(
+        ('1','marítimo'),
+        ('2','aéreo'),
+        ('3','aéreo express')
+    )
+    type = models.CharField(max_length=1, choices=TYPE,default='1')
     state = models.CharField(max_length=1, choices=STATE,default='1')
     sent_date= models.DateField(auto_now=False,null=True,blank=True)
     delivery_date= models.DateField(auto_now=False,null=True,blank=True)

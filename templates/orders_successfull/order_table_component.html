@@ -3,6 +3,7 @@
 {% if order %}
   <tr class="text-center" id="TableOrder{{order.pk}}">
     <td class="border small ">{{order.pk}}</td>
+    <td class="border small table-min">{{order.get_type_display}}</td>
     <td class="border small table-min">{{order.sent_date}}</td>
     <td class="border small table-min d-flex justify-content-around">
       <span class=" span-1 rounded-4 list-group-item small p-1 {{order.bg_proccess}}">
