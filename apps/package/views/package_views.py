@@ -1,5 +1,6 @@
+from apps.account.models import User, UserGallery
 from apps.package.filters import PackageFilter
-from apps.package.forms.package_forms import CreateImagePackageForm, PackageForm, UpdatePackageForm
+from apps.package.forms.package_forms import CreateImagePackageForm, CreateUserGalleryForm, PackageForm, UpdatePackageForm
 from apps.package.models import ImagePackage, Package,Customer,Addressee
 from django.shortcuts import render,get_object_or_404
 from django.contrib.admin.views.decorators import staff_member_required
@@ -17,6 +18,8 @@ from django.utils.translation import gettext as _
 def packages_view(request):
     context=_show_packages(request)
     context['form']  = PackageForm()
+    context['user_images']  = UserGallery.objects.filter(user=request.user)
+    context['image_form']= CreateUserGalleryForm()
     context['customers']  = Customer.objects.all()
     response= render(request,'packages/package.html',context)
     response['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
@@ -80,9 +83,12 @@ def package_get_addressee_update(request,pk):
 @staff_member_required(login_url='/')
 def package_create(request):
     form = PackageForm()
+    user_images = UserGallery.objects.filter(user=request.user)
     context={
-        'form':form,
-        'customers':Customer.objects.all(),
+        'form' : form,
+        'customers' : Customer.objects.all(),
+        'image_form' : CreateUserGalleryForm(),
+        'user_images' : user_images,
         }
     if request.method == "POST":
         import datetime 
@@ -94,24 +100,57 @@ def package_create(request):
                 package.payment_state='2'
                 package.payment_datetime = datetime.datetime.now()
                 package.save()
-            if request.FILES.getlist('images'):
-                for image_file in request.FILES.getlist('images'):
-                    ImagePackage.objects.create(
-                        package=package,
-                        image=image_file
-                    )
+            for image in user_images:
+                package_image = ImagePackage.objects.create(
+                    package = package,
+                    image = image.image
+                )
+                package_image.save()
+                image.delete()
             context['message']='Paquete creado correctamente'
         else:
             context['message']='Corrija los errores'
-            print(form.errors)
+    context['user_images']=[]
     return render(request,'packages/actions/packageCreate/packageCreateForm.html',context) 
+
+
+# package update forms
+@group_required('administrador','gestor')
+@staff_member_required(login_url='/')
+def userGallery_create(request):
+    image_form = CreateUserGalleryForm()
+    if request.method == "POST":
+        image_form = CreateUserGalleryForm(request.POST, request.FILES)
+        if image_form.is_valid():
+            image = image_form.save(commit=False)
+            image.user=request.user
+            image.save()
+    context = {
+        'user_images' : UserGallery.objects.filter(user=request.user),
+        'image_form' : image_form
+        }
+    return render(request,'packages/actions/packageCreate/imagePackage.html',context) 
+
+# package update forms
+@group_required('administrador','gestor')
+@staff_member_required(login_url='/')
+def userGallery_delete(request,pk):
+    image = UserGallery.objects.filter(pk=pk).first()
+    if request.method == "POST":
+        if image:
+            image.delete()
+    context = {
+        'user_images' : UserGallery.objects.filter(user=request.user),
+        'image_form' : CreateUserGalleryForm()
+        }
+    return render(request,'packages/actions/packageCreate/imagePackage.html',context) 
+
 
 # package update forms
 @group_required('administrador','gestor')
 @staff_member_required(login_url='/')
 def package_update(request,pk):
     package = Package.objects.filter(pk=pk).first()
-    
     context={
         'form':UpdatePackageForm(instance=package),
         'package':package,
@@ -139,6 +178,12 @@ def package_information_update(request,pk):
         form = UpdatePackageForm(request.POST,instance = package)
         if form.is_valid():
             form.save()
+            payment_state=request.POST.get('payment_confirm','')
+            if payment_state:
+                package.payment_state = '2'
+            else:
+                package.payment_state = '1'
+            package.save()
             context['form']=form
             context['message']= "Editado correctamente" 
     return render(request,'packages/actions/packageUpdate/packageUpdateForm.html',context) 

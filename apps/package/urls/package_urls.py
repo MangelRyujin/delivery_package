@@ -21,6 +21,8 @@ urlpatterns = [
     path('package_component_table_detail/<int:pk>/',package_component_table_detail,name='package_component_table_detail'),
     path('package_component_table_payment/<int:pk>/',package_component_table_payment,name='package_component_table_payment'),
     path('package_component_table_delivery/<int:pk>/',package_component_table_delivery,name='package_component_table_delivery'),
+    path('userGallery_delete/<int:pk>/',userGallery_delete,name='userGallery_delete'),
+    path('userGallery_create/',userGallery_create,name='userGallery_create'),
 
 ]
 
