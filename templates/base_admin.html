@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Tienda Ruscarparts">
     <meta name="author" content="MangelRyujin.">
-    <title>EnvíosFerna | {% block title %}{% endblock %}</title>
+    <title>Administración | {% block title %}{% endblock %}</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
     <!-- Charts -->
@@ -102,17 +102,18 @@
 
 <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow " data-bs-theme="dark">
   <a class="d-flex justify-content-start align-items-center navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white position-relative" href="{% url "dashboard_view" %}">
-    <img src="{% static "/assets/img/malecon_travel_logo.png" %}" weight="40" height="35" />
-    {% comment %} <div class=" position-absolute  dj-animate" style="z-index: 1;">
+    
+    <div class=" position-absolute  dj-animate" style="z-index: 1;">
       <div class="position-absolute w-100 h-100 d-flex justify-content-center align-items-center " >
        
-        <h2 class="fs-6 text-primary" style="font-size: 10px; transform: translateY(2px);">EF</h2>
+        <h2 class="fs-6 text-primary" style="font-size: 10px; transform: translateY(2px);">A</h2>
       </div>
       <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="  text-primary bi-gear-wide" viewBox="0 0 16 16">
         <path d="M8.932.727c-.243-.97-1.62-.97-1.864 0l-.071.286a.96.96 0 0 1-1.622.434l-.205-.211c-.695-.719-1.888-.03-1.613.931l.08.284a.96.96 0 0 1-1.186 1.187l-.284-.081c-.96-.275-1.65.918-.931 1.613l.211.205a.96.96 0 0 1-.434 1.622l-.286.071c-.97.243-.97 1.62 0 1.864l.286.071a.96.96 0 0 1 .434 1.622l-.211.205c-.719.695-.03 1.888.931 1.613l.284-.08a.96.96 0 0 1 1.187 1.187l-.081.283c-.275.96.918 1.65 1.613.931l.205-.211a.96.96 0 0 1 1.622.434l.071.286c.243.97 1.62.97 1.864 0l.071-.286a.96.96 0 0 1 1.622-.434l.205.211c.695.719 1.888.03 1.613-.931l-.08-.284a.96.96 0 0 1 1.187-1.187l.283.081c.96.275 1.65-.918.931-1.613l-.211-.205a.96.96 0 0 1 .434-1.622l.286-.071c.97-.243.97-1.62 0-1.864l-.286-.071a.96.96 0 0 1-.434-1.622l.211-.205c.719-.695.03-1.888-.931-1.613l-.284.08a.96.96 0 0 1-1.187-1.186l.081-.284c.275-.96-.918-1.65-1.613-.931l-.205.211a.96.96 0 0 1-1.622-.434zM8 12.997a4.998 4.998 0 1 1 0-9.995 4.998 4.998 0 0 1 0 9.996z"/>
       </svg>
-    </div>  {% endcomment %}
-    <span class="ms-2 fw-bold"><span class="text-logo-one">Malecón </span><span class="text-logo-two">Travel</span></span></a>
+    </div>  
+    <span class="ms-5 fw-bold">Administración</span>
+  </a>
 
     <div class="d-flex align-items-center navbar-link  ms-md-auto px-md-3 px-lg-3">
     <li class="list-unstyled text-body-secondary " >
@@ -238,20 +239,19 @@
     <div class="sidebar side-fix h-100  col-md-3 col-lg-2 p-0 bg-body-tertiary overflow-y-auto shadow">
       <div class="offcanvas-md offcanvas-end  pb-5" tabindex="-1" id="sidebarMenu" >
         <div class="offcanvas-header align-content-center position-relative">
-           {% comment %} <div class="offcanvas-title  position-absolute h-100 mx-0 px-0  mt-4" >
+           <div class="offcanvas-title  position-absolute h-100 mx-0 px-0  mt-4" >
             <div class=" position-absolute  dj-animate" style="z-index: -1;">
               <div class="position-absolute w-100 h-100 d-flex justify-content-center align-items-center " >
                
-                <h2 class="fs-6 text-primary" style="font-size: 10px;transform: translateY(2px);">EF</h2>
+                <h2 class="fs-6 text-primary" style="font-size: 10px;transform: translateY(2px);">A</h2>
               </div>
               <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="  text-primary bi-gear-wide" viewBox="0 0 16 16">
                 <path d="M8.932.727c-.243-.97-1.62-.97-1.864 0l-.071.286a.96.96 0 0 1-1.622.434l-.205-.211c-.695-.719-1.888-.03-1.613.931l.08.284a.96.96 0 0 1-1.186 1.187l-.284-.081c-.96-.275-1.65.918-.931 1.613l.211.205a.96.96 0 0 1-.434 1.622l-.286.071c-.97.243-.97 1.62 0 1.864l.286.071a.96.96 0 0 1 .434 1.622l-.211.205c-.719.695-.03 1.888.931 1.613l.284-.08a.96.96 0 0 1 1.187 1.187l-.081.283c-.275.96.918 1.65 1.613.931l.205-.211a.96.96 0 0 1 1.622.434l.071.286c.243.97 1.62.97 1.864 0l.071-.286a.96.96 0 0 1 1.622-.434l.205.211c.695.719 1.888.03 1.613-.931l-.08-.284a.96.96 0 0 1 1.187-1.187l.283.081c.96.275 1.65-.918.931-1.613l-.211-.205a.96.96 0 0 1 .434-1.622l.286-.071c.97-.243.97-1.62 0-1.864l-.286-.071a.96.96 0 0 1-.434-1.622l.211-.205c.719-.695.03-1.888-.931-1.613l-.284.08a.96.96 0 0 1-1.187-1.186l.081-.284c.275-.96-.918-1.65-1.613-.931l-.205.211a.96.96 0 0 1-1.622-.434zM8 12.997a4.998 4.998 0 1 1 0-9.995 4.998 4.998 0 0 1 0 9.996z"/>
               </svg>
             </div>
-          </div>  {% endcomment %}
-          <img src="{% static "/assets/img/malecon_travel_logo.png" %}" weight="40" height="35" />
-    
-          <h5 class="ms-2  fw-bold  "><span class="text-logo-one">Malecón </span><span class="text-logo-two">Travel</span></h5>
+          </div>  
+          
+          <h5 class="ms-5 fw-bold  ">Administración</h5>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Close">
             
           </button>
